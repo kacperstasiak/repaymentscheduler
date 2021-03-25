@@ -7,6 +7,6 @@ package com.kacperstasiak.repaymentscheduler;
  *
  * @author Kacper Stasiak (k.stasiak@icloud.com)
  */
-public class Main {
+public class Date {
     
 }
