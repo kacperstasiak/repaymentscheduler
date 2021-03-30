@@ -1,24 +1,36 @@
 package com.kacperstasiak.repaymentscheduler;
 
-import com.kacperstasiak.repaymentscheduler.mvc.*;
-
 /**
  * The Schedule controller, controls the model and view.
  * @author Kacper Stasiak
  */
-public class ScheduleController extends AbstractController {
+public class ScheduleController {
+    private ScheduleModel model;
+    private ScheduleView view;
+    
     public ScheduleController(ScheduleModel model, ScheduleView view) {
-        super(model, view);
+        this.model = model;
+        this.view = view;
+        view.setController(this);
     }
     
-    @Override
     public void shutdown() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //todo: remove gui
     }
 
-    @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //todo: add gui
+        
+        getModel().getSchedule();
+        getView().update();
+    }
+    
+    public ScheduleModel getModel() {
+        return this.model;
+    }
+
+    public ScheduleView getView() {
+        return this.view;
     }
 
 }
