@@ -20,9 +20,14 @@ public class ScheduleController {
 
     public void run() {
         //todo: add gui
+        System.out.println("=== Controller ran ===");
         
-        getModel().getSchedule();
-        getView().update();
+        ScheduleView sview = getView();
+        ScheduleModel smodel = getModel();
+        
+        sview.init();
+        
+        sview.update();
     }
     
     public ScheduleModel getModel() {
