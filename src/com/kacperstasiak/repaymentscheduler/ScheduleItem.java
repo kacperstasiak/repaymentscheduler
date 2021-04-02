@@ -4,7 +4,7 @@ package com.kacperstasiak.repaymentscheduler;
  * Represents a single repayment suggestion
  * @author Kacper Stasiak
  */
-class ScheduleItem {
+public class ScheduleItem {
     private Debt debt;  // References which debt to pay
     private int amount; // Amount recommended to pay, in pence
     
