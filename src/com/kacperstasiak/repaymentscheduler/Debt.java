@@ -5,11 +5,11 @@ package com.kacperstasiak.repaymentscheduler;
  * @author Kacper Stasiak
  */
 public class Debt {
-    private String payee;       // The name of the creditor
-    private String reference;   // User defined reference
-    private int principal;      // Full amonunt owed in pence
-    private float interestRate; // Annaul interest rate (1.0f = 100% interest, 0.01f = 1%, 0.005f = 0.5%, etc)
-    private int minimumPayment; // Minimum payment owed in pence for next billing period
+    private String payee;           // The name of the creditor
+    private String reference;       // User defined reference
+    private int outstandingBalance; // Full amonunt owed in pence
+    private float interestRate;     // Annaul interest rate (1.0f = 100% interest, 0.01f = 1%, 0.005f = 0.5%, etc)
+    private int minimumPayment;     // Minimum payment owed in pence for next billing period
     
     public Debt(String payee, String ref, int principal, float rate, int minimum) {
         if (principal < 0) {
@@ -24,7 +24,7 @@ public class Debt {
         
         this.payee = payee;
         this.reference = ref;
-        this.principal = principal;
+        this.outstandingBalance = principal;
         this.interestRate = rate;
         this.minimumPayment = minimum;
     }
@@ -45,16 +45,16 @@ public class Debt {
         reference = ref;
     }
     
-    public int getPrincipal() {
-        return principal;
+    public int getOutstandingBalance() {
+        return outstandingBalance;
     }
     
-    public void setPrincipal(int amount) {
+    public void setOutstandingBalance(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Principal must be non-negative.");
         }
         
-        principal = amount;
+        outstandingBalance = amount;
     }
     
     public float getInterestRate() {
