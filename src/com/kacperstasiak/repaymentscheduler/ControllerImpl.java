@@ -5,17 +5,17 @@ package com.kacperstasiak.repaymentscheduler;
  * view and model
  * @author Kacper Stasiak
  */
-public class ScheduleController {
+public class ControllerImpl implements Controller {
 
-    private final ScheduleModel model;
-    private final ScheduleView view;
+    private final Model model;
+    private final View view;
 
     /**
      * Public constructor for the Schedule Controller
      * @param model The data model instance to use
      * @param view The data view instance to use
      */
-    public ScheduleController(ScheduleModel model, ScheduleView view) {
+    public ControllerImpl(Model model, View view) {
         this.model = model;
         this.view = view;
         view.setController(this);
@@ -24,25 +24,35 @@ public class ScheduleController {
     /**
      * Begins the operation of the view and model
      */
+    @Override
     public void run() {
-        // todo: init view
         view.init();
+    }
+
+    /**
+     * Ends the operation of the view and model and saves it
+     */
+    @Override
+    public void shutdown() {
+        // todo: destroy views and save model
+        view.close();
     }
 
     /**
      * Returns the data model instance being used
      * @return Data model instance
      */
-    public ScheduleModel getModel() {
-        return this.model;
+    @Override
+    public Model getModel() {
+        return model;
     }
 
     /**
-     * Ends the operation of the view and model and saves it
+     * Returns the data view instance being used
+     * @return Data view instance
      */
-    public void shutdown() {
-        // todo: destroy views and save model
-        view.close();
+    @Override
+    public View getView() {
+        return view;
     }
-    
 }
