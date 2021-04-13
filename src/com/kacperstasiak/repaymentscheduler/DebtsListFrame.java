@@ -14,6 +14,14 @@ public class DebtsListFrame extends javax.swing.JFrame {
     public DebtsListFrame(ScheduleTableModel model) {
         this.model = model;
         initComponents();
+        // By default, warning shouldn't be displayed
+        budgetWarningLabel.setVisible(false);
+        
+        double minpaySum = 0;
+        budgetInputField.setValue(minpaySum);
+        budgetInputField.addPropertyChangeListener("value", 
+                (java.beans.PropertyChangeEvent event) -> budgetInputValueChanged(event)
+        );
     }
 
     /**
@@ -174,6 +182,22 @@ public class DebtsListFrame extends javax.swing.JFrame {
         if (selectedRow == -1) return;
         
         sidepanelTitle.setText((String) model.getValueAt(selectedRow, 0));
+    }
+    
+    private void budgetInputValueChanged(java.beans.PropertyChangeEvent event) {
+        double budget = ((Number)budgetInputField.getValue()).doubleValue();
+        
+        // Display a warning if budget is less than sum of all minimum payments
+        int minPaySumPence = model.getMinimumPaymentSum();
+        double minPaySum = minPaySumPence / 100.0;
+        if (budget < minPaySum) {
+            budgetWarningLabel.setVisible(true);
+        } else {
+            budgetWarningLabel.setVisible(false);
+        }
+        
+        model.setBudgetAmount(budget);
+        model.update();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
