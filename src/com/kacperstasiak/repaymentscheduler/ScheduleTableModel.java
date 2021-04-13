@@ -1,7 +1,6 @@
 package com.kacperstasiak.repaymentscheduler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.AbstractTableModel;
 
@@ -12,7 +11,11 @@ import javax.swing.table.AbstractTableModel;
 public final class ScheduleTableModel extends AbstractTableModel {
     private final ArrayList<String[]> data;
     private final String[] columns = {
-        "Debt", "Interest rate", "Outstanding balance", "Minimum payment", "Suggested payment"
+        "Debt", 
+        "Interest rate", 
+        "Outstanding balance", 
+        "Minimum payment", 
+        "Suggested payment"
     };
     private Model model = null;
 
@@ -63,11 +66,11 @@ public final class ScheduleTableModel extends AbstractTableModel {
             int suggestPay = suggestions.get(d);
             
             String[] row = {
-                ref, 
-                String.format("%.1f%%", rate * 100.0),
-                String.format("£%.2f", outstanding / 100.0),
-                String.format("£%.2f", minpay / 100.0),
-                String.format("£%.2f", suggestPay / 100.0)
+                ref,                                            // Debt Name
+                String.format("%.1f%%", rate * 100.0),          // Interest rate
+                String.format("£%.2f", outstanding / 100.0),    // Outstanding balance
+                String.format("£%.2f", minpay / 100.0),         // Minimum payment
+                String.format("£%.2f", suggestPay / 100.0)      // Suggested payment
             };
             data.add(row);
         }
