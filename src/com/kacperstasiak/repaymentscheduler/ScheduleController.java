@@ -1,41 +1,48 @@
 package com.kacperstasiak.repaymentscheduler;
 
 /**
- * The Schedule controller, controls the model and view.
+ * The controller part of the MVC structure, manages connection between
+ * view and model
  * @author Kacper Stasiak
  */
 public class ScheduleController {
-    private ScheduleModel model;
-    private ScheduleView view;
-    
+
+    private final ScheduleModel model;
+    private final ScheduleView view;
+
+    /**
+     * Public constructor for the Schedule Controller
+     * @param model The data model instance to use
+     * @param view The data view instance to use
+     */
     public ScheduleController(ScheduleModel model, ScheduleView view) {
         this.model = model;
         this.view = view;
         view.setController(this);
     }
-    
-    public void shutdown() {
-        //todo: remove gui
+
+    /**
+     * Begins the operation of the view and model
+     */
+    public void run() {
+        // todo: init view
+        view.init();
     }
 
-    public void run() {
-        //todo: add gui
-        System.out.println("=== Controller ran ===");
-        
-        ScheduleView sview = getView();
-        ScheduleModel smodel = getModel();
-        
-        sview.init();
-        
-        sview.update();
-    }
-    
+    /**
+     * Returns the data model instance being used
+     * @return Data model instance
+     */
     public ScheduleModel getModel() {
         return this.model;
     }
 
-    public ScheduleView getView() {
-        return this.view;
+    /**
+     * Ends the operation of the view and model and saves it
+     */
+    public void shutdown() {
+        // todo: destroy views and save model
+        view.close();
     }
-
+    
 }
