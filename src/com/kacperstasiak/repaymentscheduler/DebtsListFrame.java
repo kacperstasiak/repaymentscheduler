@@ -52,6 +52,9 @@ public class DebtsListFrame extends javax.swing.JFrame {
         budgetWarningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Debt Repayment Assistant");
+        setPreferredSize(new java.awt.Dimension(1000, 500));
+        setSize(new java.awt.Dimension(1000, 500));
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +63,9 @@ public class DebtsListFrame extends javax.swing.JFrame {
             }
         });
 
+        sidepanelSplitter.setDividerLocation(775);
+
+        debtTableScroll.setPreferredSize(null);
 
         debtTable.setModel(model);
         debtTable.getTableHeader().setReorderingAllowed(false);
@@ -68,6 +74,11 @@ public class DebtsListFrame extends javax.swing.JFrame {
         sidepanelSplitter.setLeftComponent(debtTableScroll);
 
         editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
         delButton.setText("Delete");
 
@@ -89,7 +100,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
                         .addComponent(editButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(delButton)
-                        .addGap(0, 23, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         sidepanelLayout.setVerticalGroup(
             sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,20 +111,16 @@ public class DebtsListFrame extends javax.swing.JFrame {
                 .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editButton)
                     .addComponent(delButton))
-                .addContainerGap(339, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
 
         sidepanelSplitter.setRightComponent(sidepanel);
 
         budgetInputField.setText("1000");
-        budgetInputField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                budgetInputFieldActionPerformed(evt);
-            }
-        });
 
         budgetAmountLabel.setText("Available repayment budget: £");
 
+        budgetWarningLabel.setForeground(new java.awt.Color(200, 0, 0));
         budgetWarningLabel.setText("Warning: Not enough to cover all minimum paments");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -121,23 +128,19 @@ public class DebtsListFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(refreshButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(budgetAmountLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(budgetWarningLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 6, Short.MAX_VALUE)))
+                .addComponent(sidepanelSplitter)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(budgetAmountLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(budgetWarningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 306, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(addButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,30 +151,22 @@ public class DebtsListFrame extends javax.swing.JFrame {
                     .addComponent(budgetAmountLabel)
                     .addComponent(budgetWarningLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(refreshButton)
-                    .addComponent(addButton))
+                .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addButton)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_refreshButtonActionPerformed
-
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void budgetInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetInputFieldActionPerformed
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
-        System.out.println("budgetInputFieldActionPerformed");
-        System.out.println(evt.getActionCommand());
-    }//GEN-LAST:event_budgetInputFieldActionPerformed
+    }//GEN-LAST:event_editButtonActionPerformed
     
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) return;
@@ -206,7 +201,6 @@ public class DebtsListFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane debtTableScroll;
     private javax.swing.JButton delButton;
     private javax.swing.JButton editButton;
-    private javax.swing.JButton refreshButton;
     private javax.swing.JPanel sidepanel;
     private javax.swing.JSplitPane sidepanelSplitter;
     private javax.swing.JLabel sidepanelTitle;
