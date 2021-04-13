@@ -1,18 +1,17 @@
 package com.kacperstasiak.repaymentscheduler;
 
 /**
- *
+ * The user interface frame displaying the debts list
  * @author Kacper Stasiak
  */
-public class MainViewFrame extends javax.swing.JFrame {
+public class DebtsListFrame extends javax.swing.JFrame {
     ScheduleTableModel model = null;
-    
     
     /**
      * Creates new form testJFrame
      * @param model The model class for the schedule
      */
-    public MainViewFrame(ScheduleTableModel model) {
+    public DebtsListFrame(ScheduleTableModel model) {
         this.model = model;
         initComponents();
     }
@@ -35,6 +34,9 @@ public class MainViewFrame extends javax.swing.JFrame {
         editButton = new javax.swing.JButton();
         delButton = new javax.swing.JButton();
         sidepanelTitle = new javax.swing.JLabel();
+        budgetInputField = new javax.swing.JFormattedTextField();
+        budgetAmountLabel = new javax.swing.JLabel();
+        budgetWarningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,10 +95,21 @@ public class MainViewFrame extends javax.swing.JFrame {
                 .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editButton)
                     .addComponent(delButton))
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addContainerGap(339, Short.MAX_VALUE))
         );
 
         sidepanelSplitter.setRightComponent(sidepanel);
+
+        budgetInputField.setText("1000");
+        budgetInputField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                budgetInputFieldActionPerformed(evt);
+            }
+        });
+
+        budgetAmountLabel.setText("Available repayment budget: £");
+
+        budgetWarningLabel.setText("Warning: Not enough to cover all minimum paments");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,7 +123,14 @@ public class MainViewFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(refreshButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(budgetAmountLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(budgetWarningLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 6, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -118,8 +138,13 @@ public class MainViewFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(budgetAmountLabel)
+                    .addComponent(budgetWarningLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(refreshButton)
                     .addComponent(addButton))
@@ -136,6 +161,12 @@ public class MainViewFrame extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void budgetInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_budgetInputFieldActionPerformed
+        // TODO add your handling code here:
+        System.out.println("budgetInputFieldActionPerformed");
+        System.out.println(evt.getActionCommand());
+    }//GEN-LAST:event_budgetInputFieldActionPerformed
     
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) return;
@@ -144,43 +175,12 @@ public class MainViewFrame extends javax.swing.JFrame {
         
         sidepanelTitle.setText((String) model.getValueAt(selectedRow, 0));
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainViewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainViewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainViewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainViewFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new MainViewFrame(new ScheduleTableModel()).setVisible(true);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JLabel budgetAmountLabel;
+    private javax.swing.JFormattedTextField budgetInputField;
+    private javax.swing.JLabel budgetWarningLabel;
     private javax.swing.JTable debtTable;
     private javax.swing.JScrollPane debtTableScroll;
     private javax.swing.JButton delButton;
