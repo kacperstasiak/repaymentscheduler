@@ -9,7 +9,7 @@ import java.util.Date;
 public class Debt {
     private String reference;
     private int outstandingBalance;
-    private float interestRate;
+    private double interestRate;
     private int minimumPayment;
     private Date lastUpdated;
     
@@ -17,27 +17,27 @@ public class Debt {
      * Public constructor for a single debt
      * @param desc A user defined reference or description
      * @param outstanding The full amount owed (in pence)
-     * @param rate The annual interest rate (1.0f = 100%)
+     * @param rate The annual interest rate (1.0 = 100%)
      * @param minimum The minimum payment due next billing period (in pence)
      */
-    public Debt(String desc, int outstanding, float rate, int minimum) {
+    public Debt(String desc, int outstanding, double rate, int minimum) {
         if (outstanding < 0) {
             throw new IllegalArgumentException("Outstanding balance must be non-negative.");
         }
-        if (rate < 0.0f || rate >= 1.0f) {
-            throw new IllegalArgumentException("Interest rate must be between 0.0f and 1.0f");
+        if (rate < 0.0 || rate >= 1.0) {
+            throw new IllegalArgumentException("Interest rate must be between 0.0 and 1.0");
         }
         if (minimum < 0) {
             throw new IllegalArgumentException("Minimum payment must be non-negative.");
         }
         
-        this.reference = desc;
-        this.outstandingBalance = outstanding;
-        this.interestRate = rate;
-        this.minimumPayment = minimum;
+        reference = desc;
+        outstandingBalance = outstanding;
+        interestRate = rate;
+        minimumPayment = minimum;
         
         // Set the debt's latest update date
-        this.lastUpdated = new Date();
+        lastUpdated = new Date();
     }
     
     /**
@@ -75,17 +75,17 @@ public class Debt {
         }
         
         // Adjust the stored outstanding balance
-        this.outstandingBalance = amount;
+        outstandingBalance = amount;
         
         // Change the last update time to now
-        this.lastUpdated = new Date();
+        lastUpdated = new Date();
     }
     
     /**
      * Returns the AER interest for the debt
      * @return The annual interest rate
      */
-    public float getInterestRate() {
+    public double getInterestRate() {
         return interestRate;
     }
     
@@ -93,17 +93,17 @@ public class Debt {
      * Sets the AER interest for this debt
      * @param rate The annual interest rate
      */
-    public void setInterestRate(float rate) {
+    public void setInterestRate(double rate) {
         // Make sure the rate is valid
-        if (rate < 0.0f || rate >= 1.0f) {
-            throw new IllegalArgumentException("Interest rate must be between 0.0f and 1.0f");
+        if (rate < 0.0 || rate >= 1.0) {
+            throw new IllegalArgumentException("Interest rate must be between 0.0 and 1.0");
         }
         
         // Adjust the stored interest rate
-        this.interestRate = rate;
+        interestRate = rate;
         
         // Change the last update time to now
-        this.lastUpdated = new Date();
+        lastUpdated = new Date();
     }
     
     /**
@@ -125,10 +125,10 @@ public class Debt {
         }
         
         // Adjust the stored minimum payment
-        this.minimumPayment = amount;
+        minimumPayment = amount;
         
         // Change the last update time to now
-        this.lastUpdated = new Date();
+        lastUpdated = new Date();
     }
     
     /**
@@ -137,6 +137,6 @@ public class Debt {
      * @return The date of latest update
      */
     public Date getLatestUpdateDate() {
-        return this.lastUpdated;
+        return lastUpdated;
     }
 }
