@@ -53,7 +53,8 @@ public class DebtsListFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Debt Repayment Assistant");
-        setPreferredSize(new java.awt.Dimension(1000, 500));
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setLocation(new java.awt.Point(0, 0));
         setSize(new java.awt.Dimension(1000, 500));
 
         addButton.setText("Add");
@@ -63,11 +64,10 @@ public class DebtsListFrame extends javax.swing.JFrame {
             }
         });
 
-        sidepanelSplitter.setDividerLocation(775);
-
-        debtTableScroll.setPreferredSize(null);
+        sidepanelSplitter.setDividerLocation(850);
 
         debtTable.setModel(model);
+        debtTable.setFillsViewportHeight(true);
         debtTable.getTableHeader().setReorderingAllowed(false);
         debtTableScroll.setViewportView(debtTable);
 
@@ -100,7 +100,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
                         .addComponent(editButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(delButton)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 65, Short.MAX_VALUE))))
         );
         sidepanelLayout.setVerticalGroup(
             sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,19 +128,20 @@ public class DebtsListFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(sidepanelSplitter)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(budgetAmountLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(budgetWarningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 306, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(addButton)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sidepanelSplitter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1051, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addButton)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(budgetAmountLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(budgetWarningLabel)))
+                        .addGap(0, 0, 0)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +155,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
                 .addComponent(sidepanelSplitter, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addButton)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
