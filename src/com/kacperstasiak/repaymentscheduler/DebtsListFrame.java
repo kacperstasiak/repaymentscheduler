@@ -40,7 +40,6 @@ public class DebtsListFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         addButton = new javax.swing.JButton();
-        refreshButton = new javax.swing.JButton();
         sidepanelSplitter = new javax.swing.JSplitPane();
         debtTableScroll = new javax.swing.JScrollPane();
         debtTable = new javax.swing.JTable();
@@ -61,12 +60,6 @@ public class DebtsListFrame extends javax.swing.JFrame {
             }
         });
 
-        refreshButton.setText("Refresh");
-        refreshButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshButtonActionPerformed(evt);
-            }
-        });
 
         debtTable.setModel(model);
         debtTable.getTableHeader().setReorderingAllowed(false);
