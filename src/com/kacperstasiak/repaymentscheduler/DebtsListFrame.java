@@ -42,9 +42,18 @@ public class DebtsListFrame extends javax.swing.JFrame {
      */
     final public void update() {
         // Update the table UI
-        System.out.println("DebtTable.updateUI() called");
         model.update();
         debtTable.updateUI();
+        
+        double budget = ((Number)budgetInputField.getValue()).doubleValue();
+        
+        int minPaySumPence = model.getMinimumPaymentSum();
+        double minPaySum = minPaySumPence / 100.0;
+        if (budget < minPaySum) {
+            budgetWarningLabel.setVisible(true);
+        } else {
+            budgetWarningLabel.setVisible(false);
+        }
     }
 
     /**
