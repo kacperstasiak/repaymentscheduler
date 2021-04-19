@@ -11,9 +11,11 @@ public class DebtsListFrame extends javax.swing.JFrame {
     /**
      * Creates new form testJFrame
      * @param model The model class for the schedule
+     * @param controller The controller class for the schedule
      */
-    public DebtsListFrame(ScheduleTableModel model) {
+    public DebtsListFrame(ScheduleTableModel model, Controller controller) {
         this.model = model;
+        this.controller = controller;
         initComponents();
         
         debtTable.setRowSelectionAllowed(true);
@@ -29,6 +31,20 @@ public class DebtsListFrame extends javax.swing.JFrame {
         budgetInputField.addPropertyChangeListener("value", 
                 (java.beans.PropertyChangeEvent event) -> budgetInputValueChanged(event)
         );
+        
+        int minPaySumPence = model.getMinimumPaymentSum();
+        budgetInputField.setValue(minPaySumPence / 100.0);
+        controller.updateBudgetAmount(minPaySumPence);
+    }
+    
+    /**
+     * Updates the frame view, specifically the debts table
+     */
+    final public void update() {
+        // Update the table UI
+        System.out.println("DebtTable.updateUI() called");
+        model.update();
+        debtTable.updateUI();
     }
 
     /**
@@ -163,11 +179,11 @@ public class DebtsListFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        controller.openAddMenu();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        // TODO add your handling code here:
+        controller.openEditMenu();
     }//GEN-LAST:event_editButtonActionPerformed
     
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
@@ -179,9 +195,9 @@ public class DebtsListFrame extends javax.swing.JFrame {
     }
     
     private void budgetInputValueChanged(java.beans.PropertyChangeEvent event) {
+        // Display a warning if budget is less than sum of all minimum payments
         double budget = ((Number)budgetInputField.getValue()).doubleValue();
         
-        // Display a warning if budget is less than sum of all minimum payments
         int minPaySumPence = model.getMinimumPaymentSum();
         double minPaySum = minPaySumPence / 100.0;
         if (budget < minPaySum) {
@@ -192,6 +208,8 @@ public class DebtsListFrame extends javax.swing.JFrame {
         
         controller.updateBudgetAmount((int) Math.floor(budget * 100));
         model.update();
+        
+        update();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

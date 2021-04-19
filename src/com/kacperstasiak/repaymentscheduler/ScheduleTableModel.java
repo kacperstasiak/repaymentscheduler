@@ -1,6 +1,7 @@
 package com.kacperstasiak.repaymentscheduler;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.swing.table.AbstractTableModel;
 
@@ -9,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Kacper Stasiak
  */
 public final class ScheduleTableModel extends AbstractTableModel {
-    private final ArrayList<String[]> data;
+    private final List<String[]> data;
     private final String[] columns = {
         "Debt", 
         "Interest rate", 
@@ -17,7 +18,7 @@ public final class ScheduleTableModel extends AbstractTableModel {
         "Minimum payment", 
         "Suggested payment"
     };
-    private Model model = null;
+    final private Model model;
 
     ScheduleTableModel(Model model) {
         this.model = model;
@@ -43,7 +44,8 @@ public final class ScheduleTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return data.get(rowIndex)[columnIndex];
+        String row[] = data.get(rowIndex);
+        return row[columnIndex];
     }
 
     public int getMinimumPaymentSum() {
