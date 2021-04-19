@@ -6,6 +6,7 @@ package com.kacperstasiak.repaymentscheduler;
  */
 public class DebtsListFrame extends javax.swing.JFrame {
     ScheduleTableModel model = null;
+    Controller controller = null;
     
     /**
      * Creates new form testJFrame
@@ -189,7 +190,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
             budgetWarningLabel.setVisible(false);
         }
         
-        model.setBudgetAmount(budget);
+        controller.updateBudgetAmount((int) Math.floor(budget * 100));
         model.update();
     }
 

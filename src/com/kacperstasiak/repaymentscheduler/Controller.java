@@ -11,4 +11,6 @@ public interface Controller {
     public View getView();
 
     public void run();
+
+    public void updateBudgetAmount(int budget);
 }

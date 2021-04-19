@@ -27,8 +27,8 @@ public interface Model {
 
     public int getMinimumPaymentSum();
 
-    public void setBudgetAmount(double budget);
-    public double getBudgetAmount();
+    public void setBudgetAmount(int budget);
+    public int getBudgetAmount();
 
     public Map<Debt, Integer> getDebtRepaymentSuggestions();
 }

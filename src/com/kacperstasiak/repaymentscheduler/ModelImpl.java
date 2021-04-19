@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class ModelImpl implements Model {
     List<Debt> debts;
-    private double budget;
+    private int budget;
     
     public ModelImpl() {
         debts = new ArrayList<>();
@@ -144,10 +144,10 @@ public class ModelImpl implements Model {
 
     /**
      * Sets the repayment budget amount
-     * @param budget Budget in pounds
+     * @param budget Repayment budget in pence
      */
     @Override
-    public void setBudgetAmount(double budget) {
+    public void setBudgetAmount(int budget) {
         this.budget = budget;
     }
     
@@ -156,7 +156,7 @@ public class ModelImpl implements Model {
      * @return Budget in pounds
      */
     @Override
-    public double getBudgetAmount() {
+    public int getBudgetAmount() {
         return budget;
     }
     
@@ -178,7 +178,7 @@ public class ModelImpl implements Model {
         });
         
         // First pass: distribute budget to cover all minimum payments if possible
-        int availableBudget = (int) (budget * 100);
+        int availableBudget = budget;
         for (Debt d : debts) {
             int minPay = d.getMinimumPayment();
             

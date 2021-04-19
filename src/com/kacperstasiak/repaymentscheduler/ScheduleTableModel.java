@@ -50,7 +50,7 @@ public final class ScheduleTableModel extends AbstractTableModel {
         return model.getMinimumPaymentSum();
     }
 
-    public void setBudgetAmount(double budget) {
+    public void setBudgetAmount(int budget) {
         model.setBudgetAmount(budget);
     }
 

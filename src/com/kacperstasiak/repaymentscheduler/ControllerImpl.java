@@ -55,4 +55,13 @@ public class ControllerImpl implements Controller {
     public View getView() {
         return view;
     }
+
+    /**
+     * Updates the budget amount used in calculating the suggestions
+     * @param budget The repayment budget in pence
+     */
+    @Override
+    public void updateBudgetAmount(int budget) {
+        model.setBudgetAmount(budget);
+    }
 }
