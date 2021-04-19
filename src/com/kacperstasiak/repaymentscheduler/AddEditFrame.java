@@ -5,6 +5,7 @@ package com.kacperstasiak.repaymentscheduler;
  * @author Kacper Stasiak
  */
 public class AddEditFrame extends javax.swing.JFrame {
+    Controller controller = null;
 
     /**
      * Creates new form AddEditFrame
@@ -182,7 +183,21 @@ public class AddEditFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        // TODO add your handling code here:
+        String ref = ((String) refInput.getValue());
+        double bal = ((Number) balInput.getValue()).doubleValue();
+        double rate = ((Number) rateInput.getValue()).doubleValue();
+        double pay = ((Number) rateInput.getValue()).doubleValue();
+        int balance = (int) Math.floor(bal);
+        int minpay = (int) Math.floor(pay);
+        if (balance < 0) {
+            System.out.println("Invalid balance!");
+            return;
+        }
+        if (minpay < 0) {
+            System.out.println("Invalid min payment!");
+            return;
+        }
+        controller.addDebt(ref, balance, rate, minpay);
     }//GEN-LAST:event_okBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed

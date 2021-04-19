@@ -11,6 +11,8 @@ public interface Controller {
     public View getView();
 
     public void run();
+    
+    public void addDebt(String ref, int oustanding, double interest, int minpay);
 
     public void updateBudgetAmount(int budget);
 }

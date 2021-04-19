@@ -55,6 +55,18 @@ public class ControllerImpl implements Controller {
     public View getView() {
         return view;
     }
+    
+    /**
+     * Adds a new debt item instance into the model
+     * @param ref User defined reference or description
+     * @param oustanding Outstanding balance in pence
+     * @param interest Annual interest rate
+     * @param minpay Next minimum payment
+     */
+    @Override
+    public void addDebt(String ref, int oustanding, double interest, int minpay) {
+        model.addDebt(ref, oustanding, interest, minpay);
+    }
 
     /**
      * Updates the budget amount used in calculating the suggestions
