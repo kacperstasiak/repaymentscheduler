@@ -6,6 +6,7 @@ package com.kacperstasiak.repaymentscheduler;
  */
 public interface View {
     public void init();
+    public void update();
     public void close();
     
     public void setController(Controller controller);

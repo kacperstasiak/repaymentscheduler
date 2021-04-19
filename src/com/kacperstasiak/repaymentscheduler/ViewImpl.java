@@ -8,6 +8,7 @@ package com.kacperstasiak.repaymentscheduler;
 public class ViewImpl implements View {
     private Controller controller;
     private DebtsListFrame mainView;
+    private AddEditFrame addeditView;
     
     /**
      * Public constructor for schedule view. A controller must be set before
@@ -31,12 +32,18 @@ public class ViewImpl implements View {
         }
         
         // Create the GUI
-        //java.awt.EventQueue.invokeLater(() -> {
-            Model model = controller.getModel();
-            ScheduleTableModel tmodel = new ScheduleTableModel(model);
-            mainView = new DebtsListFrame(tmodel);
-            mainView.setVisible(true);
-        //});
+        Model model = controller.getModel();
+        ScheduleTableModel tmodel = new ScheduleTableModel(model);
+        mainView = new DebtsListFrame(tmodel, controller);
+        mainView.setVisible(true);
+    }
+    
+    /**
+     * Updates the user interface
+     */
+    @Override
+    public void update() {
+        mainView.update();
     }
     
     /**
@@ -44,9 +51,9 @@ public class ViewImpl implements View {
      */
     @Override
     public void close() {
-        // Make the GUI invisible and remove all components
+        // Make the GUI invisible and removes it
         mainView.setVisible(false);
-        mainView.removeAll();
+        mainView.dispose();
     }
     
     /**

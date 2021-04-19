@@ -9,6 +9,7 @@ public class ControllerImpl implements Controller {
 
     private final Model model;
     private final View view;
+    private AddEditFrame addeditView;
 
     /**
      * Public constructor for the Schedule Controller
@@ -75,5 +76,31 @@ public class ControllerImpl implements Controller {
     @Override
     public void updateBudgetAmount(int budget) {
         model.setBudgetAmount(budget);
+    }
+    
+    @Override
+    public void updateView() {
+        view.update();
+    }
+
+    @Override
+    public void openEditMenu() {
+        
+    }
+
+    @Override
+    public void openAddMenu() {
+        if (addeditView == null) {
+            addeditView = new AddEditFrame(this);
+            addeditView.setVisible(true);
+        }
+    }
+    
+    @Override
+    public void closeAddMenu() {
+        if (addeditView != null) {
+            addeditView.dispose();
+            addeditView = null;
+        }
     }
 }

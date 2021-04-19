@@ -15,4 +15,12 @@ public interface Controller {
     public void addDebt(String ref, int oustanding, double interest, int minpay);
 
     public void updateBudgetAmount(int budget);
+
+    public void updateView();
+
+    public void openEditMenu();
+
+    public void openAddMenu();
+    
+    public void closeAddMenu();
 }
