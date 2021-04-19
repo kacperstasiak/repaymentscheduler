@@ -199,7 +199,7 @@ public class AddEditFrame extends javax.swing.JFrame {
             String ref = ((String) refInput.getValue());
             double bal = ((Number) balInput.getValue()).doubleValue();
             double rate = ((Number) rateInput.getValue()).doubleValue();
-            double pay = ((Number) rateInput.getValue()).doubleValue();
+            double pay = ((Number) payInput.getValue()).doubleValue();
             int balance = (int) Math.floor(bal * 100);
             int minpay = (int) Math.floor(pay * 100);
             if (ref.length() < 1) {
