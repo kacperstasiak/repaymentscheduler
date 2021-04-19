@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -69,8 +69,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="refLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="refInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="8" max="32767" attributes="0"/>
+                  <Component id="refInput" min="-2" pref="200" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -90,12 +90,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="refInput">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jFormattedTextField"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refInputActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -106,8 +100,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="balLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
-                  <Component id="balInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="balInput" min="-2" pref="200" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -127,9 +121,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="balInput">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jFormattedTextField"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="balInputActionPerformed"/>
           </Events>
@@ -143,8 +134,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="rateLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
-                  <Component id="rateInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="rateInput" min="-2" pref="200" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -164,9 +155,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="rateInput">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jFormattedTextField"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -177,8 +165,8 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="payLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="16" max="32767" attributes="0"/>
-                  <Component id="payInput" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="payInput" min="-2" pref="200" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -198,9 +186,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="payInput">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jFormattedTextField"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

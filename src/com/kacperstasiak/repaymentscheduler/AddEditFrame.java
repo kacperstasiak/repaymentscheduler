@@ -5,13 +5,37 @@ package com.kacperstasiak.repaymentscheduler;
  * @author Kacper Stasiak
  */
 public class AddEditFrame extends javax.swing.JFrame {
-    Controller controller = null;
+    Controller controller;
+    Debt editing;
 
     /**
-     * Creates new form AddEditFrame
+     * Creates a add new debt form
+     * @param controller The controller that handles the main view
      */
-    public AddEditFrame() {
-        initComponents();
+    public AddEditFrame(Controller controller) {
+        this.controller = controller;
+        initComponents();                                 
+        refInput.setValue("");
+        balInput.setValue(0.0);
+        rateInput.setValue(0.0);
+        payInput.setValue(0.0);
+        this.setTitle("Add Debt");
+    }
+    
+    /**
+     * Creates an edit debt form
+     * @param controller The controller that handles the main view
+     * @param debt The debt instance that is being edited
+     */
+    public AddEditFrame(Controller controller, Debt debt) {
+        this.controller = controller;
+        initComponents();                                
+        this.editing = debt;
+        refInput.setValue(debt.getDescription());
+        balInput.setValue(debt.getOutstandingBalance() * 100);
+        rateInput.setValue(debt.getInterestRate() * 100);
+        payInput.setValue(debt.getMinimumPayment() * 100);
+        this.setTitle("Edit Debt");
     }
 
     /**
@@ -38,16 +62,9 @@ public class AddEditFrame extends javax.swing.JFrame {
         cancelBtn = new javax.swing.JButton();
         okBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         refLabel.setText("Debt Name/Reference");
-
-        refInput.setText("jFormattedTextField");
-        refInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refInputActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout refPanelLayout = new javax.swing.GroupLayout(refPanel);
         refPanel.setLayout(refPanelLayout);
@@ -55,8 +72,8 @@ public class AddEditFrame extends javax.swing.JFrame {
             refPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(refPanelLayout.createSequentialGroup()
                 .addComponent(refLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(refInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(refInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         refPanelLayout.setVerticalGroup(
             refPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,7 +84,6 @@ public class AddEditFrame extends javax.swing.JFrame {
 
         balLabel.setText("Outstanding Balance");
 
-        balInput.setText("jFormattedTextField");
         balInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 balInputActionPerformed(evt);
@@ -80,8 +96,8 @@ public class AddEditFrame extends javax.swing.JFrame {
             balPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(balPanelLayout.createSequentialGroup()
                 .addComponent(balLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(balInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(balInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         balPanelLayout.setVerticalGroup(
             balPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,16 +108,14 @@ public class AddEditFrame extends javax.swing.JFrame {
 
         rateLabel.setText("Interest rate (AER %)");
 
-        rateInput.setText("jFormattedTextField");
-
         javax.swing.GroupLayout ratePanelLayout = new javax.swing.GroupLayout(ratePanel);
         ratePanel.setLayout(ratePanelLayout);
         ratePanelLayout.setHorizontalGroup(
             ratePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ratePanelLayout.createSequentialGroup()
                 .addComponent(rateLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(rateInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         ratePanelLayout.setVerticalGroup(
             ratePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,16 +126,14 @@ public class AddEditFrame extends javax.swing.JFrame {
 
         payLabel.setText("Next minimum payment");
 
-        payInput.setText("jFormattedTextField");
-
         javax.swing.GroupLayout payPanelLayout = new javax.swing.GroupLayout(payPanel);
         payPanel.setLayout(payPanelLayout);
         payPanelLayout.setHorizontalGroup(
             payPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(payPanelLayout.createSequentialGroup()
                 .addComponent(payLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(payInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(payInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         payPanelLayout.setVerticalGroup(
             payPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,69 +195,41 @@ public class AddEditFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        String ref = ((String) refInput.getValue());
-        double bal = ((Number) balInput.getValue()).doubleValue();
-        double rate = ((Number) rateInput.getValue()).doubleValue();
-        double pay = ((Number) rateInput.getValue()).doubleValue();
-        int balance = (int) Math.floor(bal);
-        int minpay = (int) Math.floor(pay);
-        if (balance < 0) {
-            System.out.println("Invalid balance!");
-            return;
+        if (editing == null) {
+            String ref = ((String) refInput.getValue());
+            double bal = ((Number) balInput.getValue()).doubleValue();
+            double rate = ((Number) rateInput.getValue()).doubleValue();
+            double pay = ((Number) rateInput.getValue()).doubleValue();
+            int balance = (int) Math.floor(bal * 100);
+            int minpay = (int) Math.floor(pay * 100);
+            if (ref.length() < 1) {
+                System.out.println("Invalid reference!");
+                return;
+            }
+            if (balance < 0) {
+                System.out.println("Invalid balance!");
+                return;
+            }
+            if (rate < 0.0 || rate > 100.0) {
+                System.out.println("Invalid interest rate!");
+            }
+            if (minpay < 0) {
+                System.out.println("Invalid min payment!");
+                return;
+            }
+            controller.addDebt(ref, balance, rate / 100, minpay);
+            controller.updateView();
+            controller.closeAddMenu();
         }
-        if (minpay < 0) {
-            System.out.println("Invalid min payment!");
-            return;
-        }
-        controller.addDebt(ref, balance, rate, minpay);
     }//GEN-LAST:event_okBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO add your handling code here:
+        controller.closeAddMenu();
     }//GEN-LAST:event_cancelBtnActionPerformed
-
-    private void refInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_refInputActionPerformed
 
     private void balInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_balInputActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddEditFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddEditFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddEditFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddEditFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddEditFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField balInput;
