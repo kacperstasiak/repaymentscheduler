@@ -1,17 +1,14 @@
 package com.kacperstasiak.repaymentscheduler;
 
-import java.util.Date;
-
 /**
  * A class to represents a single debt
  * @author Kacper Stasiak
  */
-public class Debt {
+public class Debt implements java.io.Serializable {
     private String reference;
     private int outstandingBalance;
     private double interestRate;
     private int minimumPayment;
-    private Date lastUpdated;
     
     /**
      * Public constructor for a single debt
@@ -35,9 +32,6 @@ public class Debt {
         outstandingBalance = outstanding;
         interestRate = rate;
         minimumPayment = minimum;
-        
-        // Set the debt's latest update date
-        lastUpdated = new Date();
     }
     
     /**
@@ -76,9 +70,6 @@ public class Debt {
         
         // Adjust the stored outstanding balance
         outstandingBalance = amount;
-        
-        // Change the last update time to now
-        lastUpdated = new Date();
     }
     
     /**
@@ -101,9 +92,6 @@ public class Debt {
         
         // Adjust the stored interest rate
         interestRate = rate;
-        
-        // Change the last update time to now
-        lastUpdated = new Date();
     }
     
     /**
@@ -126,17 +114,5 @@ public class Debt {
         
         // Adjust the stored minimum payment
         minimumPayment = amount;
-        
-        // Change the last update time to now
-        lastUpdated = new Date();
-    }
-    
-    /**
-     * Returns the date for the latest update of meaningful date, such as
-     * interest rate, outstanding balance or minimum payment
-     * @return The date of latest update
-     */
-    public Date getLatestUpdateDate() {
-        return lastUpdated;
     }
 }
