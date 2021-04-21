@@ -83,11 +83,16 @@ public class DebtsListFrame extends javax.swing.JFrame {
         budgetAmountLabel = new javax.swing.JLabel();
         budgetWarningLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Debt Repayment Assistant");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setLocation(new java.awt.Point(0, 0));
         setSize(new java.awt.Dimension(1000, 500));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +217,10 @@ public class DebtsListFrame extends javax.swing.JFrame {
         Debt selected = model.getDebtAt(selectedRow);
         controller.deleteDebt(selected);
     }//GEN-LAST:event_delButtonActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        controller.shutdown();
+    }//GEN-LAST:event_formWindowClosed
     
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) return;
