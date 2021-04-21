@@ -6,14 +6,26 @@ package com.kacperstasiak.repaymentscheduler;
  */
 public class Main {
     public static void main(String args[]) {
-        Model model = new ModelImpl();
-        model.addDebt("Test Debt 1", 100000, 0.124, 50);
-        model.addDebt("Test Debt 2", 300000, 0.170, 150);
-        model.addDebt("Test Debt 3", 200000, 0.150, 3000);
+        // Model model = new ModelImpl();
+        
+        // Attempt to load the model or get a new model
+        Model model = ModelImpl.load("./debts.ser");
+        
+        // model.addDebt("Test Debt 1", 100000, 0.124, 50);
+        // model.addDebt("Test Debt 2", 300000, 0.170, 150);
+        // model.addDebt("Test Debt 3", 200000, 0.150, 3000);
         
         View view = new ViewImpl();
         Controller controller = new ControllerImpl(model, view);
         
         controller.run();
+        
+        controller.onShutdown(
+                () -> {
+                    ModelImpl.save((ModelImpl) model, "./debts.ser");
+                }
+        );
+        
+        
     };
 }
