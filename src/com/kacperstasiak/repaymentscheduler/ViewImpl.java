@@ -8,7 +8,6 @@ package com.kacperstasiak.repaymentscheduler;
 public class ViewImpl implements View {
     private Controller controller;
     private DebtsListFrame mainView;
-    private AddEditFrame addeditView;
     
     /**
      * Public constructor for schedule view. A controller must be set before
