@@ -70,6 +70,20 @@ public class ControllerImpl implements Controller {
     }
 
     /**
+     * Edits an existing debt item instance in the model
+     * @param editing The debt instance to edit
+     * @param ref New user defined reference or description
+     * @param oustanding New outstanding balance in pence
+     * @param interest New annual interest rate
+     * @param minpay New next minimum payment
+     */
+    @Override
+    public void editDebt(Debt editing, String ref, int oustanding, 
+            double interest, int minpay) {
+        model.setDebtInterestRate(editing, interest);
+    }
+
+    /**
      * Updates the budget amount used in calculating the suggestions
      * @param budget The repayment budget in pence
      */

@@ -14,6 +14,9 @@ public interface Controller {
     
     public void addDebt(String ref, int oustanding, double interest, int minpay);
 
+    public void editDebt(Debt editing, String ref, int outstanding, 
+            double interest, int minpay);
+
     public void updateBudgetAmount(int budget);
 
     public void updateView();

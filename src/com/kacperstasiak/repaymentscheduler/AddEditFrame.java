@@ -195,32 +195,35 @@ public class AddEditFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        if (editing == null) {
-            String ref = ((String) refInput.getValue());
-            double bal = ((Number) balInput.getValue()).doubleValue();
-            double rate = ((Number) rateInput.getValue()).doubleValue();
-            double pay = ((Number) payInput.getValue()).doubleValue();
-            int balance = (int) Math.floor(bal * 100);
-            int minpay = (int) Math.floor(pay * 100);
-            if (ref.length() < 1) {
-                System.out.println("Invalid reference!");
-                return;
-            }
-            if (balance < 0) {
-                System.out.println("Invalid balance!");
-                return;
-            }
-            if (rate < 0.0 || rate > 100.0) {
-                System.out.println("Invalid interest rate!");
-            }
-            if (minpay < 0) {
-                System.out.println("Invalid min payment!");
-                return;
-            }
-            controller.addDebt(ref, balance, rate / 100, minpay);
-            controller.updateView();
-            controller.closeAddMenu();
+        String ref = ((String) refInput.getValue());
+        double bal = ((Number) balInput.getValue()).doubleValue();
+        double rate = ((Number) rateInput.getValue()).doubleValue();
+        double pay = ((Number) payInput.getValue()).doubleValue();
+        int balance = (int) Math.floor(bal * 100);
+        int minpay = (int) Math.floor(pay * 100);
+        if (ref.length() < 1) {
+            System.out.println("Invalid reference!");
+            return;
         }
+        if (balance < 0) {
+            System.out.println("Invalid balance!");
+            return;
+        }
+        if (rate < 0.0 || rate > 100.0) {
+            System.out.println("Invalid interest rate!");
+        }
+        if (minpay < 0) {
+            System.out.println("Invalid min payment!");
+            return;
+        }
+        if (editing != null) {
+            controller.editDebt(editing, ref, balance, rate / 100, minpay);
+        } else {
+            controller.addDebt(ref, balance, rate / 100, minpay);
+        }
+        controller.updateView();
+        controller.closeAddMenu();
+
     }//GEN-LAST:event_okBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
