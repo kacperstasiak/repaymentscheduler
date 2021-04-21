@@ -65,7 +65,8 @@ public class ControllerImpl implements Controller {
      * @param minpay Next minimum payment
      */
     @Override
-    public void addDebt(String ref, int oustanding, double interest, int minpay) {
+    public void addDebt(String ref, int oustanding, double interest, 
+            int minpay) {
         model.addDebt(ref, oustanding, interest, minpay);
     }
 
@@ -92,26 +93,42 @@ public class ControllerImpl implements Controller {
         model.setBudgetAmount(budget);
     }
     
+    /**
+     * Forces a UI update on the view
+     */
     @Override
     public void updateView() {
         view.update();
     }
 
+    /**
+     * Opens the add menu
+     */
     @Override
-    public void openEditMenu() {
-        
-    }
-
-    @Override
-    public void openAddMenu() {
+    public void openAddEditMenu() {
         if (addeditView == null) {
             addeditView = new AddEditFrame(this);
             addeditView.setVisible(true);
         }
     }
     
+    /**
+     * Opens the edit menu
+     * @param editing The debt instance to edit
+     */
     @Override
-    public void closeAddMenu() {
+    public void openAddEditMenu(Debt editing) {
+        if (addeditView == null) {
+            addeditView = new AddEditFrame(this, editing);
+            addeditView.setVisible(true);
+        }
+    }
+    
+    /**
+     * Closes the add/edit menu
+     */
+    @Override
+    public void closeAddEditMenu() {
         if (addeditView != null) {
             addeditView.dispose();
             addeditView = null;

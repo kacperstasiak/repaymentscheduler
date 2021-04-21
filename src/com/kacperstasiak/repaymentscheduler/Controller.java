@@ -12,7 +12,8 @@ public interface Controller {
 
     public void run();
     
-    public void addDebt(String ref, int oustanding, double interest, int minpay);
+    public void addDebt(String ref, int oustanding, double interest, 
+            int minpay);
 
     public void editDebt(Debt editing, String ref, int outstanding, 
             double interest, int minpay);
@@ -21,9 +22,9 @@ public interface Controller {
 
     public void updateView();
 
-    public void openEditMenu();
+    public void openAddEditMenu();
 
-    public void openAddMenu();
+    public void openAddEditMenu(Debt editing);
     
-    public void closeAddMenu();
+    public void closeAddEditMenu();
 }
