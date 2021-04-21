@@ -1,5 +1,11 @@
 package com.kacperstasiak.repaymentscheduler;
 
+import com.kacperstasiak.repaymentscheduler.UI.ScheduleTableModel;
+import com.kacperstasiak.repaymentscheduler.MVC.View;
+import com.kacperstasiak.repaymentscheduler.MVC.Model;
+import com.kacperstasiak.repaymentscheduler.MVC.Controller;
+import com.kacperstasiak.repaymentscheduler.UI.DebtsListFrame;
+
 /**
  * The view part of the MVC structure, displays the debts list and amounts to 
  * repay for each.
@@ -27,7 +33,7 @@ public class ViewImpl implements View {
     public void init() {
         // Make sure a controller is set up
         if (controller == null) {
-            throw new IllegalStateException("Controller not set up yet.");
+            throw new IllegalStateException("Controller not set up yet."); //NOI18N
         }
         
         // Create the GUI
@@ -64,7 +70,7 @@ public class ViewImpl implements View {
     public Controller getController() {
         // Make sure a controller is set up
         if (controller == null) {
-            throw new IllegalStateException("Controller not set up yet.");
+            throw new IllegalStateException("Controller not set up yet."); //NOI18N
         }
         return controller;
     }
@@ -92,7 +98,7 @@ public class ViewImpl implements View {
     public void setController(Controller controller) {
         // Make sure the controller is valid
         if (controller == null) {
-            throw new IllegalStateException("Invalid controller.");
+            throw new IllegalStateException("Invalid controller."); //NOI18N
         }
         
         // If we're already using some controller, shut it down before 

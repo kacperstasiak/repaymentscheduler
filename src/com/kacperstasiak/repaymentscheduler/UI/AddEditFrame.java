@@ -1,4 +1,7 @@
-package com.kacperstasiak.repaymentscheduler;
+package com.kacperstasiak.repaymentscheduler.UI;
+
+import com.kacperstasiak.repaymentscheduler.MVC.Controller;
+import com.kacperstasiak.repaymentscheduler.Debt;
 
 /**
  * The user interface frame for adding or editing a debt instance
@@ -15,11 +18,11 @@ public class AddEditFrame extends javax.swing.JFrame {
     public AddEditFrame(Controller controller) {
         this.controller = controller;
         initComponents();                                 
-        refInput.setValue("");
+        refInput.setValue(""); //NOI18N
         balInput.setValue(0.0);
         rateInput.setValue(0.0);
         payInput.setValue(0.0);
-        this.setTitle("Add Debt");
+        this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("ADD DEBT"));
     }
     
     /**
@@ -35,7 +38,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         balInput.setValue(debt.getOutstandingBalance() * 100);
         rateInput.setValue(debt.getInterestRate() * 100);
         payInput.setValue(debt.getMinimumPayment() * 100);
-        this.setTitle("Edit Debt");
+        this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("EDIT DEBT"));
     }
 
     /**
@@ -64,7 +67,9 @@ public class AddEditFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        refLabel.setText("Debt Name/Reference");
+        refLabel.setLabelFor(refInput);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English"); // NOI18N
+        refLabel.setText(bundle.getString("DEBT NAME/REFERENCE")); // NOI18N
 
         javax.swing.GroupLayout refPanelLayout = new javax.swing.GroupLayout(refPanel);
         refPanel.setLayout(refPanelLayout);
@@ -82,7 +87,8 @@ public class AddEditFrame extends javax.swing.JFrame {
                 .addComponent(refInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        balLabel.setText("Outstanding Balance");
+        balLabel.setLabelFor(balInput);
+        balLabel.setText(bundle.getString("OUTSTANDING BALANCE")); // NOI18N
 
         javax.swing.GroupLayout balPanelLayout = new javax.swing.GroupLayout(balPanel);
         balPanel.setLayout(balPanelLayout);
@@ -100,7 +106,8 @@ public class AddEditFrame extends javax.swing.JFrame {
                 .addComponent(balInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        rateLabel.setText("Interest rate (AER %)");
+        rateLabel.setLabelFor(rateInput);
+        rateLabel.setText(bundle.getString("ANNUAL INTEREST RATE")); // NOI18N
 
         javax.swing.GroupLayout ratePanelLayout = new javax.swing.GroupLayout(ratePanel);
         ratePanel.setLayout(ratePanelLayout);
@@ -118,7 +125,8 @@ public class AddEditFrame extends javax.swing.JFrame {
                 .addComponent(rateInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        payLabel.setText("Next minimum payment");
+        payLabel.setLabelFor(payInput);
+        payLabel.setText(bundle.getString("NEXT MINIMUM PAYMENT")); // NOI18N
 
         javax.swing.GroupLayout payPanelLayout = new javax.swing.GroupLayout(payPanel);
         payPanel.setLayout(payPanelLayout);
@@ -136,14 +144,14 @@ public class AddEditFrame extends javax.swing.JFrame {
                 .addComponent(payInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        cancelBtn.setText("Cancel");
+        cancelBtn.setText(bundle.getString("CANCEL")); // NOI18N
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
             }
         });
 
-        okBtn.setText("OK");
+        okBtn.setText(bundle.getString("OK")); // NOI18N
         okBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okBtnActionPerformed(evt);
@@ -196,18 +204,18 @@ public class AddEditFrame extends javax.swing.JFrame {
         int balance = (int) Math.floor(bal * 100);
         int minpay = (int) Math.floor(pay * 100);
         if (ref.length() < 1) {
-            System.out.println("Invalid reference!");
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("INVALID REFERENCE!"));
             return;
         }
         if (balance < 0) {
-            System.out.println("Invalid balance!");
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("INVALID BALANCE!"));
             return;
         }
         if (rate < 0.0 || rate > 100.0) {
-            System.out.println("Invalid interest rate!");
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("INVALID INTEREST RATE!"));
         }
         if (minpay < 0) {
-            System.out.println("Invalid min payment!");
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("INVALID MIN PAYMENT!"));
             return;
         }
         if (editing != null) {

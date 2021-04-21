@@ -1,5 +1,6 @@
-package com.kacperstasiak.repaymentscheduler;
+package com.kacperstasiak.repaymentscheduler.MVC;
 
+import com.kacperstasiak.repaymentscheduler.Debt;
 import java.util.List;
 import java.util.Map;
 

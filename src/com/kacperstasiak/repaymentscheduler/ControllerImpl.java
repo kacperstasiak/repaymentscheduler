@@ -1,5 +1,10 @@
 package com.kacperstasiak.repaymentscheduler;
 
+import com.kacperstasiak.repaymentscheduler.MVC.View;
+import com.kacperstasiak.repaymentscheduler.MVC.Model;
+import com.kacperstasiak.repaymentscheduler.MVC.Controller;
+import com.kacperstasiak.repaymentscheduler.UI.AddEditFrame;
+
 /**
  * The controller part of the MVC structure, manages connection between
  * view and model

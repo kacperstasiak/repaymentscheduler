@@ -1,5 +1,6 @@
 package com.kacperstasiak.repaymentscheduler;
 
+import com.kacperstasiak.repaymentscheduler.MVC.Model;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -239,16 +240,27 @@ public class ModelImpl implements Model, java.io.Serializable {
             ObjectInputStream in = new ObjectInputStream(filein))
         {
             ModelImpl model = (ModelImpl) in.readObject();
-            System.out.println("Loaded model from " + filepath);
+            System.out.println(
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                        .getString("LOADED MODEL FROM {0}"), 
+                    new Object[] {filepath}
+                )
+            );
             return model;
         } catch (ClassNotFoundException e) {
-            System.out.println("Failed to load model due to " 
-                    + "ClassNotFoundException.");
-            e.printStackTrace();
+            System.out.println(
+                java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                    .getString("FAILED TO LOAD MODEL DUE TO CLASSNOTFOUNDEXCEPTION.")
+            );
         } catch(IOException e) {
-            System.out.println("Caught IOException when loading model at " 
-                    + filepath);
-            e.printStackTrace();
+            System.out.println(
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                        .getString("CAUGHT IOEXCEPTION WHEN LOADING MODEL AT {0}"), 
+                    new Object[] {filepath}
+                )
+            );
         }
         return new ModelImpl();
     };
@@ -264,15 +276,29 @@ public class ModelImpl implements Model, java.io.Serializable {
             ObjectOutputStream out = new ObjectOutputStream(fileout))
         {
             out.writeObject(model);
-            System.out.println("Saved model at " + filepath);
+            System.out.println(
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                        .getString("SAVED MODEL AT {0}"), 
+                    new Object[] {filepath}
+                )
+            );
         } catch(FileNotFoundException e) {
-            System.out.println("Failed to save model at " 
-                    + filepath + " due to FileNotFoundException");
-            e.printStackTrace();
+            System.out.println(
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                        .getString("FAILED TO SAVE MODEL AT {0} DUE TO FILENOTFOUNDEXCEPTION"), 
+                    new Object[] {filepath}
+                )
+            );
         } catch(IOException e) {
-            System.out.println("Caught IOException when saving model at " 
-                    + filepath);
-            e.printStackTrace();
+            System.out.println(
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                        .getString("CAUGHT IOEXCEPTION WHEN SAVING MODEL AT {0}"), 
+                    new Object[] {filepath}
+                )
+            );
         }
     };
 }

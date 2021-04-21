@@ -1,4 +1,7 @@
-package com.kacperstasiak.repaymentscheduler;
+package com.kacperstasiak.repaymentscheduler.UI;
+
+import com.kacperstasiak.repaymentscheduler.MVC.Controller;
+import com.kacperstasiak.repaymentscheduler.Debt;
 
 /**
  * The user interface frame displaying the debts list
@@ -29,7 +32,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
         
         double minpaySum = 0;
         budgetInputField.setValue(minpaySum);
-        budgetInputField.addPropertyChangeListener("value", 
+        budgetInputField.addPropertyChangeListener("value",  //NOI18N
                 (java.beans.PropertyChangeEvent event) -> 
                         budgetInputValueChanged(event)
         );
@@ -84,7 +87,8 @@ public class DebtsListFrame extends javax.swing.JFrame {
         budgetWarningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Debt Repayment Assistant");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English"); // NOI18N
+        setTitle(bundle.getString("TITLE")); // NOI18N
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setLocation(new java.awt.Point(0, 0));
         setSize(new java.awt.Dimension(1000, 500));
@@ -94,7 +98,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
             }
         });
 
-        addButton.setText("Add");
+        addButton.setText(bundle.getString("ADD BUTTON")); // NOI18N
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -110,14 +114,14 @@ public class DebtsListFrame extends javax.swing.JFrame {
 
         sidepanelSplitter.setLeftComponent(debtTableScroll);
 
-        editButton.setText("Edit");
+        editButton.setText(bundle.getString("EDIT BUTTON")); // NOI18N
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
             }
         });
 
-        delButton.setText("Delete");
+        delButton.setText(bundle.getString("DELETE BUTTON")); // NOI18N
         delButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 delButtonActionPerformed(evt);
@@ -126,7 +130,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
 
         sidepanelTitle.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         sidepanelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sidepanelTitle.setText("Debt 1");
+        sidepanelTitle.setText(bundle.getString("NOTHING SELECTED")); // NOI18N
 
         javax.swing.GroupLayout sidepanelLayout = new javax.swing.GroupLayout(sidepanel);
         sidepanel.setLayout(sidepanelLayout);
@@ -142,7 +146,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
                         .addComponent(editButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(delButton)
-                        .addGap(0, 65, Short.MAX_VALUE))))
+                        .addGap(0, 19, Short.MAX_VALUE))))
         );
         sidepanelLayout.setVerticalGroup(
             sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,12 +162,10 @@ public class DebtsListFrame extends javax.swing.JFrame {
 
         sidepanelSplitter.setRightComponent(sidepanel);
 
-        budgetInputField.setText("1000");
-
-        budgetAmountLabel.setText("Available repayment budget: £");
+        budgetAmountLabel.setText(bundle.getString("AVAILABLE REPAYMENT BUDGET")); // NOI18N
 
         budgetWarningLabel.setForeground(new java.awt.Color(200, 0, 0));
-        budgetWarningLabel.setText("Warning: Not enough to cover all minimum paments");
+        budgetWarningLabel.setText(bundle.getString("WARNING: NOT ENOUGH TO COVER ALL MINIMUM PAYMENTS")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,7 +229,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
         updateSidepanel();
     }
     
-    private void budgetInputValueChanged(java.beans.PropertyChangeEvent event) {
+    private void budgetInputValueChanged(java.beans.PropertyChangeEvent evt) {
         // Display a warning if budget is less than sum of all minimum payments
         double budget = ((Number)budgetInputField.getValue()).doubleValue();
         
@@ -263,7 +265,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
         int selectedRow = debtTable.getSelectedRow();
         
         if (selectedRow == -1 || model.getValueAt(selectedRow, 0) == null) {
-            sidepanelTitle.setText("Nothing selected");
+            sidepanelTitle.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("NOTHING SELECTED"));
         
             // Disable the edit and delete buttons if selection is invalid
             editButton.setEnabled(false);

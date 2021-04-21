@@ -19,13 +19,13 @@ public class Debt implements java.io.Serializable {
      */
     public Debt(String desc, int outstanding, double rate, int minimum) {
         if (outstanding < 0) {
-            throw new IllegalArgumentException("Outstanding balance must be non-negative.");
+            throw new IllegalArgumentException("Outstanding balance must be non-negative."); //NOI18N
         }
         if (rate < 0.0 || rate >= 1.0) {
-            throw new IllegalArgumentException("Interest rate must be between 0.0 and 1.0");
+            throw new IllegalArgumentException("Interest rate must be between 0.0 and 1.0"); //NOI18N
         }
         if (minimum < 0) {
-            throw new IllegalArgumentException("Minimum payment must be non-negative.");
+            throw new IllegalArgumentException("Minimum payment must be non-negative."); //NOI18N
         }
         
         reference = desc;
@@ -65,7 +65,7 @@ public class Debt implements java.io.Serializable {
     public void setOutstandingBalance(int amount) {
         // Make sure the amount is valid
         if (amount < 0) {
-            throw new IllegalArgumentException("Outstanding balance must be non-negative.");
+            throw new IllegalArgumentException("Outstanding balance must be non-negative."); //NOI18N
         }
         
         // Adjust the stored outstanding balance
@@ -87,7 +87,7 @@ public class Debt implements java.io.Serializable {
     public void setInterestRate(double rate) {
         // Make sure the rate is valid
         if (rate < 0.0 || rate >= 1.0) {
-            throw new IllegalArgumentException("Interest rate must be between 0.0 and 1.0");
+            throw new IllegalArgumentException("Interest rate must be between 0.0 and 1.0"); //NOI18N
         }
         
         // Adjust the stored interest rate
@@ -109,7 +109,7 @@ public class Debt implements java.io.Serializable {
     public void setMinimumPayment(int amount) {
         // Make sure the amount is valid
         if (amount < 0) {
-            throw new IllegalArgumentException("Minimum payment must be non-negative.");
+            throw new IllegalArgumentException("Minimum payment must be non-negative."); //NOI18N
         }
         
         // Adjust the stored minimum payment
