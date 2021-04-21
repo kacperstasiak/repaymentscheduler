@@ -10,7 +10,6 @@ import javax.swing.table.AbstractTableModel;
  * @author Kacper Stasiak
  */
 public final class ScheduleTableModel extends AbstractTableModel {
-    private final List<String[]> data;
     private final String[] columns = {
         "Debt", 
         "Interest rate", 
@@ -19,16 +18,16 @@ public final class ScheduleTableModel extends AbstractTableModel {
         "Suggested payment"
     };
     final private Model model;
+    private Map<Debt, Integer> suggestions;
 
     ScheduleTableModel(Model model) {
         this.model = model;
-        data = new ArrayList<>();
-        update();
+        this.suggestions = model.getDebtRepaymentSuggestions();
     }
     
     @Override
     public int getRowCount() {
-        return data.size();
+        return model.getDebtsCount();
     }
 
     @Override
@@ -42,10 +41,28 @@ public final class ScheduleTableModel extends AbstractTableModel {
         return columns[columnIndex];
     }
 
+    Debt getDebtAt(int rowIndex) {
+        return model.getDebts().get(rowIndex);
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        String row[] = data.get(rowIndex);
-        return row[columnIndex];
+        Debt debt = getDebtAt(rowIndex);
+        switch (columnIndex) {
+            case 0: // Debt reference, name or description
+                return debt.getDescription();
+            case 1: // Interest rate
+                return String.format("%.1f%%", debt.getInterestRate() * 100.0);
+            case 2: // Outstanding balance
+                return String.format("£%.2f", 
+                        debt.getOutstandingBalance() / 100.0);
+            case 3: // Next minimum payment
+                return String.format("£%.2f", debt.getMinimumPayment() / 100.0);
+            case 4: // Suggested payment amount
+                return String.format("£%.2f", suggestions.get(debt) / 100.0);
+            default:
+                return "-";
+        }
     }
 
     public int getMinimumPaymentSum() {
@@ -57,24 +74,6 @@ public final class ScheduleTableModel extends AbstractTableModel {
     }
 
     public void update() {
-        Map<Debt, Integer> suggestions = model.getDebtRepaymentSuggestions();
-        
-        data.clear();
-        for (Debt d : model.getDebts()) {
-            String ref = model.getDebtRef(d);
-            double rate = model.getDebtInterestRate(d);
-            int outstanding = model.getDebtOutstandingBalance(d);
-            int minpay = model.getDebtMinimumPayment(d);
-            int suggestPay = suggestions.get(d);
-            
-            String[] row = {
-                ref,                                            // Debt Name
-                String.format("%.1f%%", rate * 100.0),          // Interest rate
-                String.format("£%.2f", outstanding / 100.0),    // Outstanding balance
-                String.format("£%.2f", minpay / 100.0),         // Minimum payment
-                String.format("£%.2f", suggestPay / 100.0)      // Suggested payment
-            };
-            data.add(row);
-        }
+        suggestions = model.getDebtRepaymentSuggestions();
     }
 }

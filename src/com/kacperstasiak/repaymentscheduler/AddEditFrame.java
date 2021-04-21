@@ -222,12 +222,12 @@ public class AddEditFrame extends javax.swing.JFrame {
             controller.addDebt(ref, balance, rate / 100, minpay);
         }
         controller.updateView();
-        controller.closeAddMenu();
+        controller.closeAddEditMenu();
 
     }//GEN-LAST:event_okBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        controller.closeAddMenu();
+        controller.closeAddEditMenu();
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void balInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balInputActionPerformed

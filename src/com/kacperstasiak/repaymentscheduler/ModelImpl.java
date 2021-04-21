@@ -212,4 +212,13 @@ public class ModelImpl implements Model {
         // Return the map
         return map;
     }
+    
+    /**
+     * Returns the size of the debts list
+     * @return The number of debts in the list
+     */
+    @Override
+    public int getDebtsCount() {
+        return debts.size();
+    }
 }

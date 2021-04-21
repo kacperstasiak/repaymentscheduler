@@ -31,4 +31,6 @@ public interface Model {
     public int getBudgetAmount();
 
     public Map<Debt, Integer> getDebtRepaymentSuggestions();
+
+    public int getDebtsCount();
 }
