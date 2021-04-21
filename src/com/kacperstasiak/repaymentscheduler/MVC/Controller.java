@@ -24,12 +24,6 @@ public interface Controller {
 
     public void updateView();
 
-    public void openAddEditMenu();
-
-    public void openAddEditMenu(Debt editing);
-    
-    public void closeAddEditMenu();
-
     public void deleteDebt(Debt debt);
     
     

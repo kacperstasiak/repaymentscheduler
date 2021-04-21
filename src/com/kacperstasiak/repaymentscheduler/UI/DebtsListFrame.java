@@ -2,46 +2,51 @@ package com.kacperstasiak.repaymentscheduler.UI;
 
 import com.kacperstasiak.repaymentscheduler.MVC.Controller;
 import com.kacperstasiak.repaymentscheduler.Debt;
+import javax.swing.SwingUtilities;
 
 /**
  * The user interface frame displaying the debts list
  * @author Kacper Stasiak
  */
 public class DebtsListFrame extends javax.swing.JFrame {
-    ScheduleTableModel model = null;
-    Controller controller = null;
+    private ScheduleTableModel tableModel = null;
+    private Controller controller = null;
+    private ConfirmDialog confirmDialog;
+    private AddEditFrame addEditMenu;
     
     /**
      * Creates new form testJFrame
-     * @param model The model class for the schedule
+     * @param model The tableModel class for the schedule
      * @param controller The controller class for the schedule
      */
     public DebtsListFrame(ScheduleTableModel model, Controller controller) {
-        this.model = model;
+        this.tableModel = model;
         this.controller = controller;
         initComponents();
         
         debtTable.setRowSelectionAllowed(true);
+        // Add a listener on list selection
         debtTable.getSelectionModel().addListSelectionListener(
                 (javax.swing.event.ListSelectionEvent event) -> 
                         listSelectionPerformed(event)
         );
         
-        // By default, warning shouldn't be displayed
-        budgetWarningLabel.setVisible(false);
-        
-        double minpaySum = 0;
-        budgetInputField.setValue(minpaySum);
+        // Add a listener on value change
         budgetInputField.addPropertyChangeListener("value",  //NOI18N
                 (java.beans.PropertyChangeEvent event) -> 
                         budgetInputValueChanged(event)
         );
         
+        // Set default values for budget input
         int minPaySumPence = model.getMinimumPaymentSum();
         budgetInputField.setValue(minPaySumPence / 100.0);
         controller.updateBudgetAmount(minPaySumPence);
         
-        updateSidepanel();
+        // By default, warning shouldn't be displayed
+        budgetWarningLabel.setVisible(false);
+        
+        // Update the UI
+        update();
     }
     
     /**
@@ -49,13 +54,14 @@ public class DebtsListFrame extends javax.swing.JFrame {
      */
     final public void update() {
         // Update the table UI
-        model.update();
+        tableModel.update();
+        
         // Use invokeLater to prevent certain null pointer exceptions
         SwingUtilities.invokeLater(debtTable::updateUI);
         
         double budget = ((Number)budgetInputField.getValue()).doubleValue();
         
-        int minPaySumPence = model.getMinimumPaymentSum();
+        int minPaySumPence = tableModel.getMinimumPaymentSum();
         double minPaySum = minPaySumPence / 100.0;
         if (budget < minPaySum) {
             budgetWarningLabel.setVisible(true);
@@ -63,7 +69,45 @@ public class DebtsListFrame extends javax.swing.JFrame {
             budgetWarningLabel.setVisible(false);
         }
         
+        // Disable debt table if deletion dialog or add/edit menu is visible
+        if (confirmDialog != null || addEditMenu != null) {
+            budgetInputField.setEnabled(false);
+            debtTable.setEnabled(false);
+            addButton.setEnabled(false);
+        } else {
+            budgetInputField.setEnabled(true);
+            debtTable.setEnabled(true);
+            addButton.setEnabled(true);
+        }
+        
+        // Update sidepanel
         updateSidepanel();
+    }
+    
+    private void updateSidepanel() {
+        int selectedRow = debtTable.getSelectedRow();
+        if (selectedRow == -1 || tableModel.getValueAt(selectedRow, 0) == null) {
+            sidepanelTitle.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("NOTHING SELECTED"));
+        
+            // Disable the edit and delete buttons if selection is invalid
+            editButton.setEnabled(false);
+            delButton.setEnabled(false);
+            
+            return;
+        }
+        
+        // Disable the buttons if a delete dialog or add/edit menu is visible
+        if (confirmDialog != null || addEditMenu != null) {
+            editButton.setEnabled(false);
+            delButton.setEnabled(false);
+            
+            return;
+        }
+        
+        String title = (String) tableModel.getValueAt(selectedRow, 0);
+        sidepanelTitle.setText(title);
+        editButton.setEnabled(true);
+        delButton.setEnabled(true);
     }
 
     /**
@@ -87,15 +131,15 @@ public class DebtsListFrame extends javax.swing.JFrame {
         budgetAmountLabel = new javax.swing.JLabel();
         budgetWarningLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English"); // NOI18N
         setTitle(bundle.getString("TITLE")); // NOI18N
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setLocation(new java.awt.Point(0, 0));
         setSize(new java.awt.Dimension(1000, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -108,7 +152,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
 
         sidepanelSplitter.setDividerLocation(850);
 
-        debtTable.setModel(model);
+        debtTable.setModel(tableModel);
         debtTable.setFillsViewportHeight(true);
         debtTable.getTableHeader().setReorderingAllowed(false);
         debtTableScroll.setViewportView(debtTable);
@@ -204,48 +248,133 @@ public class DebtsListFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        controller.openAddEditMenu();
+        // Open the add menu
+        openAddEditMenu();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int selectedRow = debtTable.getSelectedRow();
         if (selectedRow == -1) return;
-        Debt selected = model.getDebtAt(selectedRow);
-        controller.openAddEditMenu(selected);
+        Debt selected = tableModel.getDebtAt(selectedRow);
+        
+        // Do not allow editing if an add/edit menu is already displayed
+        if (addEditMenu != null) {
+            addEditMenu.toFront();
+            return;
+        }
+        
+        // Do not allow editing if deletion dialog is displayed
+        if (confirmDialog != null) {
+            confirmDialog.toFront();
+            return;
+        }
+        
+        // Open the edit menu
+        openAddEditMenu(selected);
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
         int selectedRow = debtTable.getSelectedRow();
         if (selectedRow == -1) return;
-        Debt selected = model.getDebtAt(selectedRow);
-        controller.deleteDebt(selected);
+        Debt selected = tableModel.getDebtAt(selectedRow);
+        
+        // Do not allow editing if an add/edit menu is displayed
+        if (addEditMenu != null) {
+            addEditMenu.toFront();
+            return;
+        }
+        
+        // Do not allow editing if deletion dialog is already displayed
+        if (confirmDialog != null) {
+            confirmDialog.toFront();
+            return;
+        }
+        
+        // Create a confirmation dialog
+        confirmDialog = new ConfirmDialog(this, () -> { controller.deleteDebt(selected); });
+        confirmDialog.setVisible(true);
+        
+        // Update the UI
+        update();
+        
     }//GEN-LAST:event_delButtonActionPerformed
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // Make sure to close the add/edit menu
+        if (addEditMenu != null) {
+            closeAddEditMenu();
+        }
+        
+        // Make sure to close the dialog box
+        if (confirmDialog != null) {
+            closeDialog();
+        }
+        
+        // Inform the controller of the shutdown
         controller.shutdown();
-    }//GEN-LAST:event_formWindowClosed
+    }//GEN-LAST:event_formWindowClosing
     
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) return;
-        updateSidepanel();
+        
+        // Update the UI
+        update();
     }
     
     private void budgetInputValueChanged(java.beans.PropertyChangeEvent evt) {
-        // Display a warning if budget is less than sum of all minimum payments
+        // Update the tableModel with new budget
         double budget = ((Number)budgetInputField.getValue()).doubleValue();
-        
-        int minPaySumPence = model.getMinimumPaymentSum();
-        double minPaySum = minPaySumPence / 100.0;
-        if (budget < minPaySum) {
-            budgetWarningLabel.setVisible(true);
-        } else {
-            budgetWarningLabel.setVisible(false);
-        }
-        
         controller.updateBudgetAmount((int) Math.floor(budget * 100));
-        model.update();
         
+        // Update the table tableModel
+        tableModel.update();
+
         update();
+    }
+
+    /**
+     * Opens the add menu
+     */
+    public void openAddEditMenu() {
+        if (addEditMenu == null) {
+            addEditMenu = new AddEditFrame(this, controller);
+            addEditMenu.setVisible(true);
+            update();
+        }
+    }
+    
+    /**
+     * Opens the edit menu
+     * @param editing The debt instance to edit
+     */
+    public void openAddEditMenu(Debt editing) {
+        if (addEditMenu == null) {
+            addEditMenu = new AddEditFrame(this, controller, editing);
+            addEditMenu.setVisible(true);
+            update();
+        }
+    }
+    
+    /**
+     * Closes the add/edit menu
+     */
+    public void closeAddEditMenu() {
+        if (addEditMenu != null) {
+            addEditMenu.dispose();
+            addEditMenu = null;
+            update();
+        }
+    }
+    
+    /**
+     * Closes the confirmation dialog
+     */
+    public void closeDialog() {
+        if (confirmDialog != null) {
+            confirmDialog.dispose();
+            confirmDialog = null;
+            update();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -261,23 +390,4 @@ public class DebtsListFrame extends javax.swing.JFrame {
     private javax.swing.JSplitPane sidepanelSplitter;
     private javax.swing.JLabel sidepanelTitle;
     // End of variables declaration//GEN-END:variables
-
-    private void updateSidepanel() {
-        int selectedRow = debtTable.getSelectedRow();
-        
-        if (selectedRow == -1 || model.getValueAt(selectedRow, 0) == null) {
-            sidepanelTitle.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English").getString("NOTHING SELECTED"));
-        
-            // Disable the edit and delete buttons if selection is invalid
-            editButton.setEnabled(false);
-            delButton.setEnabled(false);
-            
-            return;
-        }
-        
-        String title = (String) model.getValueAt(selectedRow, 0);
-        sidepanelTitle.setText(title);
-        editButton.setEnabled(true);
-        delButton.setEnabled(true);
-    }
 }

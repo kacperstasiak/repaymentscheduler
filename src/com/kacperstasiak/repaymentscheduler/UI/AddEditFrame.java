@@ -2,20 +2,24 @@ package com.kacperstasiak.repaymentscheduler.UI;
 
 import com.kacperstasiak.repaymentscheduler.MVC.Controller;
 import com.kacperstasiak.repaymentscheduler.Debt;
+import javax.swing.JFrame;
 
 /**
  * The user interface frame for adding or editing a debt instance
  * @author Kacper Stasiak
  */
 public class AddEditFrame extends javax.swing.JFrame {
+    DebtsListFrame parent;
     Controller controller;
     Debt editing;
 
     /**
      * Creates a add new debt form
+     * @param parent The debts list frame that created this form
      * @param controller The controller that handles the main view
      */
-    public AddEditFrame(Controller controller) {
+    public AddEditFrame(DebtsListFrame parent, Controller controller) {
+        this.parent = parent;
         this.controller = controller;
         initComponents();                                 
         refInput.setValue(""); //NOI18N
@@ -27,10 +31,12 @@ public class AddEditFrame extends javax.swing.JFrame {
     
     /**
      * Creates an edit debt form
+     * @param parent The debts list frame that created this form
      * @param controller The controller that handles the main view
      * @param debt The debt instance that is being edited
      */
-    public AddEditFrame(Controller controller, Debt debt) {
+    public AddEditFrame(DebtsListFrame parent, Controller controller, Debt debt) {
+        this.parent = parent;
         this.controller = controller;
         initComponents();                                
         this.editing = debt;
@@ -66,6 +72,13 @@ public class AddEditFrame extends javax.swing.JFrame {
         okBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+                formWindowLostFocus(evt);
+            }
+        });
 
         refLabel.setLabelFor(refInput);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English"); // NOI18N
@@ -224,13 +237,18 @@ public class AddEditFrame extends javax.swing.JFrame {
             controller.addDebt(ref, balance, rate / 100, minpay);
         }
         controller.updateView();
-        controller.closeAddEditMenu();
+        parent.closeAddEditMenu();
 
     }//GEN-LAST:event_okBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        controller.closeAddEditMenu();
+        parent.closeAddEditMenu();
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
+        toFront();
+        requestFocus();
+    }//GEN-LAST:event_formWindowLostFocus
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField balInput;

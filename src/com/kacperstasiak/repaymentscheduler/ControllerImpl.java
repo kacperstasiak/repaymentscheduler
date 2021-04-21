@@ -33,6 +33,8 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void run() {
+        
+        
         view.init();
     }
 
@@ -109,40 +111,6 @@ public class ControllerImpl implements Controller {
     @Override
     public void updateView() {
         view.update();
-    }
-
-    /**
-     * Opens the add menu
-     */
-    @Override
-    public void openAddEditMenu() {
-        if (addeditView == null) {
-            addeditView = new AddEditFrame(this);
-            addeditView.setVisible(true);
-        }
-    }
-    
-    /**
-     * Opens the edit menu
-     * @param editing The debt instance to edit
-     */
-    @Override
-    public void openAddEditMenu(Debt editing) {
-        if (addeditView == null) {
-            addeditView = new AddEditFrame(this, editing);
-            addeditView.setVisible(true);
-        }
-    }
-    
-    /**
-     * Closes the add/edit menu
-     */
-    @Override
-    public void closeAddEditMenu() {
-        if (addeditView != null) {
-            addeditView.dispose();
-            addeditView = null;
-        }
     }
     
     /**
