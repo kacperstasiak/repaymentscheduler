@@ -20,7 +20,8 @@ public class DebtsListFrame extends javax.swing.JFrame {
         
         debtTable.setRowSelectionAllowed(true);
         debtTable.getSelectionModel().addListSelectionListener(
-                (javax.swing.event.ListSelectionEvent event) -> listSelectionPerformed(event)
+                (javax.swing.event.ListSelectionEvent event) -> 
+                        listSelectionPerformed(event)
         );
         
         // By default, warning shouldn't be displayed
@@ -29,12 +30,15 @@ public class DebtsListFrame extends javax.swing.JFrame {
         double minpaySum = 0;
         budgetInputField.setValue(minpaySum);
         budgetInputField.addPropertyChangeListener("value", 
-                (java.beans.PropertyChangeEvent event) -> budgetInputValueChanged(event)
+                (java.beans.PropertyChangeEvent event) -> 
+                        budgetInputValueChanged(event)
         );
         
         int minPaySumPence = model.getMinimumPaymentSum();
         budgetInputField.setValue(minPaySumPence / 100.0);
         controller.updateBudgetAmount(minPaySumPence);
+        
+        updateSidepanel();
     }
     
     /**
@@ -54,6 +58,8 @@ public class DebtsListFrame extends javax.swing.JFrame {
         } else {
             budgetWarningLabel.setVisible(false);
         }
+        
+        updateSidepanel();
     }
 
     /**
@@ -188,19 +194,19 @@ public class DebtsListFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        controller.openAddMenu();
+        controller.openAddEditMenu();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        controller.openEditMenu();
+        int selectedRow = debtTable.getSelectedRow();
+        if (selectedRow == -1) return;
+        Debt selected = model.getDebtAt(selectedRow);
+        controller.openAddEditMenu(selected);
     }//GEN-LAST:event_editButtonActionPerformed
     
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) return;
-        int selectedRow = debtTable.getSelectedRow();
-        if (selectedRow == -1) return;
-        
-        sidepanelTitle.setText((String) model.getValueAt(selectedRow, 0));
+        updateSidepanel();
     }
     
     private void budgetInputValueChanged(java.beans.PropertyChangeEvent event) {
@@ -234,4 +240,23 @@ public class DebtsListFrame extends javax.swing.JFrame {
     private javax.swing.JSplitPane sidepanelSplitter;
     private javax.swing.JLabel sidepanelTitle;
     // End of variables declaration//GEN-END:variables
+
+    private void updateSidepanel() {
+        int selectedRow = debtTable.getSelectedRow();
+        
+        if (selectedRow == -1) {
+            sidepanelTitle.setText("Nothing selected");
+        
+            // Disable the edit and delete buttons if selection is invalid
+            editButton.setEnabled(false);
+            delButton.setEnabled(false);
+            
+            return;
+        }
+        
+        String title = (String) model.getValueAt(selectedRow, 0);
+        sidepanelTitle.setText(title);
+        editButton.setEnabled(true);
+        delButton.setEnabled(true);
+    }
 }
