@@ -29,4 +29,11 @@ public interface Controller {
     public void closeAddEditMenu();
 
     public void deleteDebt(Debt debt);
+    
+    
+    public interface Callback {
+        void callback();
+    }
+    
+    public void onShutdown(Callback callback);
 }

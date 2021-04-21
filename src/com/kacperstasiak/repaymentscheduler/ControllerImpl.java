@@ -10,6 +10,7 @@ public class ControllerImpl implements Controller {
     private final Model model;
     private final View view;
     private AddEditFrame addeditView;
+    private Callback shutdownCallback;
 
     /**
      * Public constructor for the Schedule Controller
@@ -36,6 +37,11 @@ public class ControllerImpl implements Controller {
     @Override
     public void shutdown() {
         view.close();
+        
+        // If we have a callback, call it
+        if (shutdownCallback != null) {
+            shutdownCallback.callback();
+        }
     }
 
     /**
@@ -142,5 +148,14 @@ public class ControllerImpl implements Controller {
     public void deleteDebt(Debt debt) {
         model.removeDebt(debt);
         updateView();
+    }
+
+    /**
+     * Sets up a callback handler which will be called when shutdown() is called
+     * @param callback The function to call when shutting down
+     */
+    @Override
+    public void onShutdown(Callback callback) {
+        this.shutdownCallback = callback;
     }
 }
