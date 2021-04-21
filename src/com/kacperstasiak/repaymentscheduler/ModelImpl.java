@@ -1,5 +1,11 @@
 package com.kacperstasiak.repaymentscheduler;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +15,7 @@ import java.util.Map;
  * The model part of the MVC structure, stores and manages the data.
  * @author Kacper Stasiak
  */
-public class ModelImpl implements Model {
+public class ModelImpl implements Model, java.io.Serializable {
     List<Debt> debts;
     private int budget;
     
@@ -221,4 +227,52 @@ public class ModelImpl implements Model {
     public int getDebtsCount() {
         return debts.size();
     }
+    
+    /**
+     * Loads a model from a serialised file
+     * @param filepath The path where the serialised file is
+     * @return The loaded model or a new ModelImpl instance if loading failed
+     */
+    public static ModelImpl load(String filepath) {
+        try (
+            FileInputStream filein = new FileInputStream(filepath);
+            ObjectInputStream in = new ObjectInputStream(filein))
+        {
+            ModelImpl model = (ModelImpl) in.readObject();
+            System.out.println("Loaded model from " + filepath);
+            return model;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Failed to load model due to " 
+                    + "ClassNotFoundException.");
+            e.printStackTrace();
+        } catch(IOException e) {
+            System.out.println("Caught IOException when loading model at " 
+                    + filepath);
+            e.printStackTrace();
+        }
+        return new ModelImpl();
+    };
+    
+    /**
+     * Saves a model into a serialised file
+     * @param model The model to save
+     * @param filepath The path where the serialised file is or should be
+     */
+    public static void save(ModelImpl model, String filepath) {
+        try (
+            FileOutputStream fileout = new FileOutputStream(filepath);
+            ObjectOutputStream out = new ObjectOutputStream(fileout))
+        {
+            out.writeObject(model);
+            System.out.println("Saved model at " + filepath);
+        } catch(FileNotFoundException e) {
+            System.out.println("Failed to save model at " 
+                    + filepath + " due to FileNotFoundException");
+            e.printStackTrace();
+        } catch(IOException e) {
+            System.out.println("Caught IOException when saving model at " 
+                    + filepath);
+            e.printStackTrace();
+        }
+    };
 }
