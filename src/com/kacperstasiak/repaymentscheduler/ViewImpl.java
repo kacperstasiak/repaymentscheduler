@@ -39,8 +39,11 @@ public class ViewImpl implements View {
         // Create the GUI
         Model model = controller.getModel();
         ScheduleTableModel tmodel = new ScheduleTableModel(model);
-        mainView = new DebtsListFrame(tmodel, controller);
-        mainView.setVisible(true);
+        
+        java.awt.EventQueue.invokeLater(() -> {
+            mainView = new DebtsListFrame(tmodel, controller);
+            mainView.setVisible(true);
+        });
     }
     
     /**

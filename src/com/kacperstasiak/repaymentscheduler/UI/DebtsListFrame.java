@@ -50,7 +50,8 @@ public class DebtsListFrame extends javax.swing.JFrame {
     final public void update() {
         // Update the table UI
         model.update();
-        debtTable.updateUI();
+        // Use invokeLater to prevent certain null pointer exceptions
+        SwingUtilities.invokeLater(debtTable::updateUI);
         
         double budget = ((Number)budgetInputField.getValue()).doubleValue();
         
