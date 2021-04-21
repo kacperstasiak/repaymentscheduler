@@ -72,7 +72,6 @@ public class AddEditFrame extends javax.swing.JFrame {
             refPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(refPanelLayout.createSequentialGroup()
                 .addComponent(refLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(refInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         refPanelLayout.setVerticalGroup(
@@ -83,12 +82,6 @@ public class AddEditFrame extends javax.swing.JFrame {
         );
 
         balLabel.setText("Outstanding Balance");
-
-        balInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                balInputActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout balPanelLayout = new javax.swing.GroupLayout(balPanel);
         balPanel.setLayout(balPanelLayout);
@@ -229,10 +222,6 @@ public class AddEditFrame extends javax.swing.JFrame {
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         controller.closeAddEditMenu();
     }//GEN-LAST:event_cancelBtnActionPerformed
-
-    private void balInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_balInputActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField balInput;

@@ -121,9 +121,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="balInput">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="balInputActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
