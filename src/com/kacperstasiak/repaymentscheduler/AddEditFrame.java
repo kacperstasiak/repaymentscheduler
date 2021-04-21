@@ -72,6 +72,7 @@ public class AddEditFrame extends javax.swing.JFrame {
             refPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(refPanelLayout.createSequentialGroup()
                 .addComponent(refLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(refInput, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         refPanelLayout.setVerticalGroup(

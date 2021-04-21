@@ -27,4 +27,6 @@ public interface Controller {
     public void openAddEditMenu(Debt editing);
     
     public void closeAddEditMenu();
+
+    public void deleteDebt(Debt debt);
 }

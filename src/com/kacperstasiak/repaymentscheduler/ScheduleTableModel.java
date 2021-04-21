@@ -42,12 +42,15 @@ public final class ScheduleTableModel extends AbstractTableModel {
     }
 
     Debt getDebtAt(int rowIndex) {
+        if (rowIndex < 0) return null;
+        if (rowIndex >= getRowCount()) return null;
         return model.getDebts().get(rowIndex);
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Debt debt = getDebtAt(rowIndex);
+        if (debt == null) return null;
         switch (columnIndex) {
             case 0: // Debt reference, name or description
                 return debt.getDescription();

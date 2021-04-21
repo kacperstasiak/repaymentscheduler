@@ -35,7 +35,6 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void shutdown() {
-        // todo: destroy views and save model
         view.close();
     }
 
@@ -133,5 +132,15 @@ public class ControllerImpl implements Controller {
             addeditView.dispose();
             addeditView = null;
         }
+    }
+    
+    /**
+     * Deletes a debt instance from the list
+     * @param debt The debt instance to remove from the model
+     */
+    @Override
+    public void deleteDebt(Debt debt) {
+        model.removeDebt(debt);
+        updateView();
     }
 }

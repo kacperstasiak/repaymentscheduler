@@ -113,6 +113,11 @@ public class DebtsListFrame extends javax.swing.JFrame {
         });
 
         delButton.setText("Delete");
+        delButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delButtonActionPerformed(evt);
+            }
+        });
 
         sidepanelTitle.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         sidepanelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -163,16 +168,13 @@ public class DebtsListFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sidepanelSplitter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1051, Short.MAX_VALUE)
+                    .addComponent(addButton)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addButton)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(budgetAmountLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(budgetWarningLabel)))
-                        .addGap(0, 0, 0)))
+                        .addComponent(budgetAmountLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(budgetInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(budgetWarningLabel)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,6 +205,13 @@ public class DebtsListFrame extends javax.swing.JFrame {
         Debt selected = model.getDebtAt(selectedRow);
         controller.openAddEditMenu(selected);
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
+        int selectedRow = debtTable.getSelectedRow();
+        if (selectedRow == -1) return;
+        Debt selected = model.getDebtAt(selectedRow);
+        controller.deleteDebt(selected);
+    }//GEN-LAST:event_delButtonActionPerformed
     
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) return;
@@ -244,7 +253,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
     private void updateSidepanel() {
         int selectedRow = debtTable.getSelectedRow();
         
-        if (selectedRow == -1) {
+        if (selectedRow == -1 || model.getValueAt(selectedRow, 0) == null) {
             sidepanelTitle.setText("Nothing selected");
         
             // Disable the edit and delete buttons if selection is invalid
