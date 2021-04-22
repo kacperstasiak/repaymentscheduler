@@ -93,7 +93,10 @@ public class ControllerImpl implements Controller {
     @Override
     public void editDebt(Debt editing, String ref, int oustanding, 
             double interest, int minpay) {
+        model.setDebtRef(editing, ref);
+        model.setDebtOutstandingBalance(editing, oustanding);
         model.setDebtInterestRate(editing, interest);
+        model.setDebtMinimumPayment(editing, minpay);
     }
 
     /**

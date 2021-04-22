@@ -99,6 +99,8 @@ public class Debt implements java.io.Serializable {
      * @return The minimum payment amount (in pence)
      */
     public int getMinimumPayment() {
+        if (outstandingBalance < minimumPayment)
+            return outstandingBalance;
         return minimumPayment;
     }
     

@@ -1,7 +1,7 @@
 package com.kacperstasiak.repaymentscheduler;
 
-import com.apple.eawt.Application;
-import com.apple.eawt.QuitStrategy;
+//import com.apple.eawt.Application;
+//import com.apple.eawt.QuitStrategy;
 import com.kacperstasiak.repaymentscheduler.MVC.View;
 import com.kacperstasiak.repaymentscheduler.MVC.Model;
 import com.kacperstasiak.repaymentscheduler.MVC.Controller;
@@ -16,7 +16,7 @@ public class Main {
         // Ensures the controller's shutdown function is called when quitting 
         // the app on macOS, thus ensuring the shutdown callback is triggered
         // in this function, so that the model is saved.
-        Application.getApplication().setQuitStrategy(QuitStrategy.CLOSE_ALL_WINDOWS);
+        //Application.getApplication().setQuitStrategy(QuitStrategy.CLOSE_ALL_WINDOWS);
         
         Model model;
         

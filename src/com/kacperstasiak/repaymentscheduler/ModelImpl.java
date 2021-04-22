@@ -242,7 +242,7 @@ public class ModelImpl implements Model, java.io.Serializable {
             ModelImpl model = (ModelImpl) in.readObject();
             System.out.println(
                 java.text.MessageFormat.format(
-                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings")
                         .getString("LOADED MODEL FROM {0}"), 
                     new Object[] {filepath}
                 )
@@ -250,13 +250,13 @@ public class ModelImpl implements Model, java.io.Serializable {
             return model;
         } catch (ClassNotFoundException e) {
             System.out.println(
-                java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings")
                     .getString("FAILED TO LOAD MODEL DUE TO CLASSNOTFOUNDEXCEPTION.")
             );
         } catch(IOException e) {
             System.out.println(
                 java.text.MessageFormat.format(
-                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings")
                         .getString("CAUGHT IOEXCEPTION WHEN LOADING MODEL AT {0}"), 
                     new Object[] {filepath}
                 )
@@ -278,7 +278,7 @@ public class ModelImpl implements Model, java.io.Serializable {
             out.writeObject(model);
             System.out.println(
                 java.text.MessageFormat.format(
-                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings")
                         .getString("SAVED MODEL AT {0}"), 
                     new Object[] {filepath}
                 )
@@ -286,7 +286,7 @@ public class ModelImpl implements Model, java.io.Serializable {
         } catch(FileNotFoundException e) {
             System.out.println(
                 java.text.MessageFormat.format(
-                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings")
                         .getString("FAILED TO SAVE MODEL AT {0} DUE TO FILENOTFOUNDEXCEPTION"), 
                     new Object[] {filepath}
                 )
@@ -294,7 +294,7 @@ public class ModelImpl implements Model, java.io.Serializable {
         } catch(IOException e) {
             System.out.println(
                 java.text.MessageFormat.format(
-                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/English")
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings")
                         .getString("CAUGHT IOEXCEPTION WHEN SAVING MODEL AT {0}"), 
                     new Object[] {filepath}
                 )
