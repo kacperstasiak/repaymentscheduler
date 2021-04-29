@@ -89,15 +89,15 @@ public class AssistantController implements Controller {
      *
      * @param editing The debt instance to edit
      * @param ref New user defined reference or description
-     * @param oustanding New outstanding balance in pence
+     * @param outstanding New outstanding balance in pence
      * @param interest New annual interest rate
      * @param minpay New next minimum payment
      */
     @Override
-    public void editDebt(Debt editing, String ref, int oustanding,
+    public void editDebt(Debt editing, String ref, int outstanding,
             double interest, int minpay) {
         model.setDebtRef(editing, ref);
-        model.setDebtOutstandingBalance(editing, oustanding);
+        model.setDebtOutstandingBalance(editing, outstanding);
         model.setDebtInterestRate(editing, interest);
         model.setDebtMinimumPayment(editing, minpay);
     }

@@ -6,7 +6,8 @@ import java.util.Map;
 import javax.swing.table.AbstractTableModel;
 
 /**
- * Encapsulates the Schedule data model for use in Java Swing tables
+ * Encapsulates the debt repayment assistant's data model for use in Java Swing
+ * tables
  *
  * @author Kacper Stasiak
  */
