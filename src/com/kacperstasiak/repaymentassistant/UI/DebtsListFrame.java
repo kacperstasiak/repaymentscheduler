@@ -1,7 +1,7 @@
-package com.kacperstasiak.repaymentscheduler.UI;
+package com.kacperstasiak.repaymentassistant.UI;
 
-import com.kacperstasiak.repaymentscheduler.MVC.Controller;
-import com.kacperstasiak.repaymentscheduler.Debt;
+import com.kacperstasiak.repaymentassistant.MVC.Controller;
+import com.kacperstasiak.repaymentassistant.Debt;
 import javax.swing.SwingUtilities;
 
 /**
@@ -90,7 +90,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
     private void updateSidepanel() {
         int selectedRow = debtTable.getSelectedRow();
         if (selectedRow == -1 || tableModel.getValueAt(selectedRow, 0) == null) {
-            sidepanelTitle.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("NOTHING SELECTED"));
+            sidepanelTitle.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("NOTHING SELECTED"));
 
             // Disable the edit and delete buttons if selection is invalid
             editButton.setEnabled(false);
@@ -135,7 +135,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
         budgetWarningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings"); // NOI18N
         setTitle(bundle.getString("TITLE")); // NOI18N
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setLocation(new java.awt.Point(0, 0));

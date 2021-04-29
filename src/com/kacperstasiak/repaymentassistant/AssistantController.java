@@ -1,8 +1,8 @@
-package com.kacperstasiak.repaymentscheduler;
+package com.kacperstasiak.repaymentassistant;
 
-import com.kacperstasiak.repaymentscheduler.MVC.View;
-import com.kacperstasiak.repaymentscheduler.MVC.Model;
-import com.kacperstasiak.repaymentscheduler.MVC.Controller;
+import com.kacperstasiak.repaymentassistant.MVC.View;
+import com.kacperstasiak.repaymentassistant.MVC.Model;
+import com.kacperstasiak.repaymentassistant.MVC.Controller;
 
 /**
  * The controller part of the MVC structure, manages connection between view and

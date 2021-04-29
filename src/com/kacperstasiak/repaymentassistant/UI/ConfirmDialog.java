@@ -1,6 +1,6 @@
-package com.kacperstasiak.repaymentscheduler.UI;
+package com.kacperstasiak.repaymentassistant.UI;
 
-import com.kacperstasiak.repaymentscheduler.MVC.Controller.Callback;
+import com.kacperstasiak.repaymentassistant.MVC.Controller.Callback;
 
 /**
  *
@@ -37,7 +37,7 @@ public class ConfirmDialog extends javax.swing.JFrame {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings"); // NOI18N
         setTitle(bundle.getString("CONFIRM DELETE")); // NOI18N
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {

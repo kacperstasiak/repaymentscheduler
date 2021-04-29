@@ -1,7 +1,7 @@
-package com.kacperstasiak.repaymentscheduler.UI;
+package com.kacperstasiak.repaymentassistant.UI;
 
-import com.kacperstasiak.repaymentscheduler.MVC.Controller;
-import com.kacperstasiak.repaymentscheduler.Debt;
+import com.kacperstasiak.repaymentassistant.MVC.Controller;
+import com.kacperstasiak.repaymentassistant.Debt;
 
 /**
  * The user interface frame for adding or editing a debt instance
@@ -28,7 +28,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         balInput.setValue(0.0);
         rateInput.setValue(0.0);
         payInput.setValue(0.0);
-        this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("ADD DEBT"));
+        this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("ADD DEBT"));
     }
 
     /**
@@ -47,7 +47,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         balInput.setValue(debt.getOutstandingBalance() / 100);
         rateInput.setValue(debt.getInterestRate() * 100);
         payInput.setValue(debt.getMinimumPayment() / 100);
-        this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("EDIT DEBT"));
+        this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("EDIT DEBT"));
     }
 
     /**
@@ -84,7 +84,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         });
 
         refLabel.setLabelFor(refInput);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings"); // NOI18N
         refLabel.setText(bundle.getString("DEBT NAME/REFERENCE")); // NOI18N
 
         javax.swing.GroupLayout refPanelLayout = new javax.swing.GroupLayout(refPanel);
@@ -220,18 +220,18 @@ public class AddEditFrame extends javax.swing.JFrame {
         int balance = (int) Math.floor(bal * 100);
         int minpay = (int) Math.floor(pay * 100);
         if (ref.length() < 1) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("INVALID REFERENCE!"));
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID REFERENCE!"));
             return;
         }
         if (balance < 0) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("INVALID BALANCE!"));
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID BALANCE!"));
             return;
         }
         if (rate < 0.0 || rate > 100.0) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("INVALID INTEREST RATE!"));
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID INTEREST RATE!"));
         }
         if (minpay < 0) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("INVALID MIN PAYMENT!"));
+            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID MIN PAYMENT!"));
             return;
         }
         if (editing != null) {

@@ -1,4 +1,4 @@
-package com.kacperstasiak.repaymentscheduler.MVC;
+package com.kacperstasiak.repaymentassistant.MVC;
 
 /**
  * The interface for the view part of the MVC structure

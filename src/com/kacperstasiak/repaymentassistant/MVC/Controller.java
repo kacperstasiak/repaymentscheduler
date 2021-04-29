@@ -1,6 +1,6 @@
-package com.kacperstasiak.repaymentscheduler.MVC;
+package com.kacperstasiak.repaymentassistant.MVC;
 
-import com.kacperstasiak.repaymentscheduler.Debt;
+import com.kacperstasiak.repaymentassistant.Debt;
 
 /**
  * The interface for the controller part of the MVC structure

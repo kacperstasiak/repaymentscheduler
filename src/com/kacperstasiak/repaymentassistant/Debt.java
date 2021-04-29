@@ -1,4 +1,4 @@
-package com.kacperstasiak.repaymentscheduler;
+package com.kacperstasiak.repaymentassistant;
 
 /**
  * A class to represents a single debt

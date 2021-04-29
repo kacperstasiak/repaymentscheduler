@@ -1,10 +1,10 @@
-package com.kacperstasiak.repaymentscheduler;
+package com.kacperstasiak.repaymentassistant;
 
-import com.kacperstasiak.repaymentscheduler.UI.ScheduleTableModel;
-import com.kacperstasiak.repaymentscheduler.MVC.View;
-import com.kacperstasiak.repaymentscheduler.MVC.Model;
-import com.kacperstasiak.repaymentscheduler.MVC.Controller;
-import com.kacperstasiak.repaymentscheduler.UI.DebtsListFrame;
+import com.kacperstasiak.repaymentassistant.UI.ScheduleTableModel;
+import com.kacperstasiak.repaymentassistant.MVC.View;
+import com.kacperstasiak.repaymentassistant.MVC.Model;
+import com.kacperstasiak.repaymentassistant.MVC.Controller;
+import com.kacperstasiak.repaymentassistant.UI.DebtsListFrame;
 
 /**
  * The view part of the MVC structure, displays the debts list and amounts to 
@@ -16,9 +16,8 @@ public class AssistantSwingView implements View {
     private DebtsListFrame mainView;
     
     /**
-     * Public constructor for schedule view. A controller must be set before
-     * calling {@link #init() init()} through 
-     * {@link #setController(ScheduleController) setController}
+     * Public constructor for the debt repayment assistant view. A controller must be set before
+     * calling {@link #init() init()} through {@link #setController(ScheduleController) setController}
      */
     public AssistantSwingView() {
         // Begin with a null controller
@@ -67,7 +66,7 @@ public class AssistantSwingView implements View {
     /**
      * Returns the current schedule controller. Throws IllegalStateException if
      * no controller is set up
-     * @return Schedule controller being used
+     * @return The controller being used
      */
     @Override
     public Controller getController() {
@@ -92,7 +91,7 @@ public class AssistantSwingView implements View {
     /**
      * Sets up the controller for this view. Can be called multiple times, 
      * if a controller is already set up, 
-     * {@link com.kacperstasiak.repaymentscheduler.ControllerImpl#shutdown() shutdown()} 
+     * {@link com.kacperstasiak.repaymentassistant.AssistantController#shutdown() shutdown()} 
      * is called on it. Throws IllegalStateException if the passed controller 
      * is invalid
      * @param controller The controller instance to use
