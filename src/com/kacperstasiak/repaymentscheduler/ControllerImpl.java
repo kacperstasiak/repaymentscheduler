@@ -98,6 +98,15 @@ public class ControllerImpl implements Controller {
         model.setDebtInterestRate(editing, interest);
         model.setDebtMinimumPayment(editing, minpay);
     }
+    
+    /**
+     * Returns the number of debts in the model
+     * @return Number of debts
+     */
+    @Override
+    public int getDebtsCount() {
+        return model.getDebtsCount();
+    }
 
     /**
      * Updates the budget amount used in calculating the suggestions

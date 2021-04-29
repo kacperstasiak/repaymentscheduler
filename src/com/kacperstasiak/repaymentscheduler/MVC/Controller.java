@@ -19,6 +19,8 @@ public interface Controller {
 
     public void editDebt(Debt editing, String ref, int outstanding, 
             double interest, int minpay);
+    
+    public int getDebtsCount();
 
     public void updateBudgetAmount(int budget);
 
