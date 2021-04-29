@@ -2,35 +2,38 @@ package com.kacperstasiak.repaymentscheduler.UI;
 
 import com.kacperstasiak.repaymentscheduler.MVC.Controller;
 import com.kacperstasiak.repaymentscheduler.Debt;
-import javax.swing.JFrame;
 
 /**
  * The user interface frame for adding or editing a debt instance
+ *
  * @author Kacper Stasiak
  */
 public class AddEditFrame extends javax.swing.JFrame {
+
     DebtsListFrame parent;
     Controller controller;
     Debt editing;
 
     /**
      * Creates a add new debt form
+     *
      * @param parent The debts list frame that created this form
      * @param controller The controller that handles the main view
      */
     public AddEditFrame(DebtsListFrame parent, Controller controller) {
         this.parent = parent;
         this.controller = controller;
-        initComponents();                                 
+        initComponents();
         refInput.setValue(""); //NOI18N
         balInput.setValue(0.0);
         rateInput.setValue(0.0);
         payInput.setValue(0.0);
         this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("ADD DEBT"));
     }
-    
+
     /**
      * Creates an edit debt form
+     *
      * @param parent The debts list frame that created this form
      * @param controller The controller that handles the main view
      * @param debt The debt instance that is being edited
@@ -38,7 +41,7 @@ public class AddEditFrame extends javax.swing.JFrame {
     public AddEditFrame(DebtsListFrame parent, Controller controller, Debt debt) {
         this.parent = parent;
         this.controller = controller;
-        initComponents();                                
+        initComponents();
         this.editing = debt;
         refInput.setValue(debt.getDescription());
         balInput.setValue(debt.getOutstandingBalance() / 100);

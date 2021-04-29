@@ -6,16 +6,19 @@ import javax.swing.SwingUtilities;
 
 /**
  * The user interface frame displaying the debts list
+ *
  * @author Kacper Stasiak
  */
 public class DebtsListFrame extends javax.swing.JFrame {
+
     private ScheduleTableModel tableModel = null;
     private Controller controller = null;
     private ConfirmDialog confirmDialog;
     private AddEditFrame addEditMenu;
-    
+
     /**
      * Creates new form testJFrame
+     *
      * @param model The tableModel class for the schedule
      * @param controller The controller class for the schedule
      */
@@ -23,44 +26,44 @@ public class DebtsListFrame extends javax.swing.JFrame {
         this.tableModel = model;
         this.controller = controller;
         initComponents();
-        
+
         debtTable.setRowSelectionAllowed(true);
         // Add a listener on list selection
         debtTable.getSelectionModel().addListSelectionListener(
-                (javax.swing.event.ListSelectionEvent event) -> 
-                        listSelectionPerformed(event)
+                (javax.swing.event.ListSelectionEvent event)
+                -> listSelectionPerformed(event)
         );
-        
+
         // Add a listener on value change
-        budgetInputField.addPropertyChangeListener("value",  //NOI18N
-                (java.beans.PropertyChangeEvent event) -> 
-                        budgetInputValueChanged(event)
+        budgetInputField.addPropertyChangeListener("value", //NOI18N
+                (java.beans.PropertyChangeEvent event)
+                -> budgetInputValueChanged(event)
         );
-        
+
         // Set default values for budget input
         int minPaySumPence = model.getMinimumPaymentSum();
         budgetInputField.setValue(minPaySumPence / 100.0);
         controller.updateBudgetAmount(minPaySumPence);
-        
+
         // By default, warning shouldn't be displayed
         budgetWarningLabel.setVisible(false);
-        
+
         // Update the UI
         update();
     }
-    
+
     /**
      * Updates the frame view, specifically the debts table
      */
     final public void update() {
         // Update the table UI
         tableModel.update();
-        
+
         // Use invokeLater to prevent certain null pointer exceptions
         SwingUtilities.invokeLater(debtTable::updateUI);
-        
-        double budget = ((Number)budgetInputField.getValue()).doubleValue();
-        
+
+        double budget = ((Number) budgetInputField.getValue()).doubleValue();
+
         int minPaySumPence = tableModel.getMinimumPaymentSum();
         double minPaySum = minPaySumPence / 100.0;
         if (budget < minPaySum) {
@@ -68,7 +71,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
         } else {
             budgetWarningLabel.setVisible(false);
         }
-        
+
         // Disable debt table if deletion dialog or add/edit menu is visible
         if (confirmDialog != null || addEditMenu != null) {
             budgetInputField.setEnabled(false);
@@ -79,31 +82,31 @@ public class DebtsListFrame extends javax.swing.JFrame {
             debtTable.setEnabled(true);
             addButton.setEnabled(true);
         }
-        
+
         // Update sidepanel
         updateSidepanel();
     }
-    
+
     private void updateSidepanel() {
         int selectedRow = debtTable.getSelectedRow();
         if (selectedRow == -1 || tableModel.getValueAt(selectedRow, 0) == null) {
             sidepanelTitle.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentscheduler/strings").getString("NOTHING SELECTED"));
-        
+
             // Disable the edit and delete buttons if selection is invalid
             editButton.setEnabled(false);
             delButton.setEnabled(false);
-            
+
             return;
         }
-        
+
         // Disable the buttons if a delete dialog or add/edit menu is visible
         if (confirmDialog != null || addEditMenu != null) {
             editButton.setEnabled(false);
             delButton.setEnabled(false);
-            
+
             return;
         }
-        
+
         String title = (String) tableModel.getValueAt(selectedRow, 0);
         sidepanelTitle.setText(title);
         editButton.setEnabled(true);
@@ -254,49 +257,55 @@ public class DebtsListFrame extends javax.swing.JFrame {
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         int selectedRow = debtTable.getSelectedRow();
-        if (selectedRow == -1) return;
+        if (selectedRow == -1) {
+            return;
+        }
         Debt selected = tableModel.getDebtAt(selectedRow);
-        
+
         // Do not allow editing if an add/edit menu is already displayed
         if (addEditMenu != null) {
             addEditMenu.toFront();
             return;
         }
-        
+
         // Do not allow editing if deletion dialog is displayed
         if (confirmDialog != null) {
             confirmDialog.toFront();
             return;
         }
-        
+
         // Open the edit menu
         openAddEditMenu(selected);
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delButtonActionPerformed
         int selectedRow = debtTable.getSelectedRow();
-        if (selectedRow == -1) return;
+        if (selectedRow == -1) {
+            return;
+        }
         Debt selected = tableModel.getDebtAt(selectedRow);
-        
+
         // Do not allow editing if an add/edit menu is displayed
         if (addEditMenu != null) {
             addEditMenu.toFront();
             return;
         }
-        
+
         // Do not allow editing if deletion dialog is already displayed
         if (confirmDialog != null) {
             confirmDialog.toFront();
             return;
         }
-        
+
         // Create a confirmation dialog
-        confirmDialog = new ConfirmDialog(this, () -> { controller.deleteDebt(selected); });
+        confirmDialog = new ConfirmDialog(this, () -> {
+            controller.deleteDebt(selected);
+        });
         confirmDialog.setVisible(true);
-        
+
         // Update the UI
         update();
-        
+
     }//GEN-LAST:event_delButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -304,28 +313,30 @@ public class DebtsListFrame extends javax.swing.JFrame {
         if (addEditMenu != null) {
             closeAddEditMenu();
         }
-        
+
         // Make sure to close the dialog box
         if (confirmDialog != null) {
             closeDialog();
         }
-        
+
         // Inform the controller of the shutdown
         controller.shutdown();
     }//GEN-LAST:event_formWindowClosing
-    
+
     private void listSelectionPerformed(javax.swing.event.ListSelectionEvent evt) {
-        if (evt.getValueIsAdjusting()) return;
-        
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
+
         // Update the UI
         update();
     }
-    
+
     private void budgetInputValueChanged(java.beans.PropertyChangeEvent evt) {
         // Update the tableModel with new budget
-        double budget = ((Number)budgetInputField.getValue()).doubleValue();
+        double budget = ((Number) budgetInputField.getValue()).doubleValue();
         controller.updateBudgetAmount((int) Math.floor(budget * 100));
-        
+
         // Update the table tableModel
         tableModel.update();
 
@@ -342,9 +353,10 @@ public class DebtsListFrame extends javax.swing.JFrame {
             update();
         }
     }
-    
+
     /**
      * Opens the edit menu
+     *
      * @param editing The debt instance to edit
      */
     public void openAddEditMenu(Debt editing) {
@@ -354,7 +366,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
             update();
         }
     }
-    
+
     /**
      * Closes the add/edit menu
      */
@@ -365,7 +377,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
             update();
         }
     }
-    
+
     /**
      * Closes the confirmation dialog
      */

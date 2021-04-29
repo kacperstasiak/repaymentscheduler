@@ -1,20 +1,19 @@
 package com.kacperstasiak.repaymentscheduler.UI;
 
 import com.kacperstasiak.repaymentscheduler.MVC.Controller.Callback;
-import java.util.concurrent.Callable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Kacper Stasiak
  */
-public class ConfirmDialog extends javax.swing.JFrame {    
+public class ConfirmDialog extends javax.swing.JFrame {
+
     private DebtsListFrame parent;
     private Callback callback;
-    
+
     /**
      * Creates new form ConfirmDialog
+     *
      * @param parent The debts list frame that created this dialog
      * @param callback The function to call on confirmation
      */

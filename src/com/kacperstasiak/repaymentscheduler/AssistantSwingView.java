@@ -11,7 +11,7 @@ import com.kacperstasiak.repaymentscheduler.UI.DebtsListFrame;
  * repay for each.
  * @author Kacper Stasiak
  */
-public class ViewImpl implements View {
+public class AssistantSwingView implements View {
     private Controller controller;
     private DebtsListFrame mainView;
     
@@ -20,13 +20,13 @@ public class ViewImpl implements View {
      * calling {@link #init() init()} through 
      * {@link #setController(ScheduleController) setController}
      */
-    public ViewImpl() {
+    public AssistantSwingView() {
         // Begin with a null controller
         controller = null;
     }
     
     /**
-     * Initialises the user interface for use. Throws IllegelStateException
+     * Initialises the user interface for use. Throws IllegalStateException
      * if a controller isn't set up yet
      */
     @Override
@@ -93,7 +93,7 @@ public class ViewImpl implements View {
      * Sets up the controller for this view. Can be called multiple times, 
      * if a controller is already set up, 
      * {@link com.kacperstasiak.repaymentscheduler.ControllerImpl#shutdown() shutdown()} 
-     * is called on it. Throws IllegelStateException if the passed controller 
+     * is called on it. Throws IllegalStateException if the passed controller 
      * is invalid
      * @param controller The controller instance to use
      */
