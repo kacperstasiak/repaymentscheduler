@@ -36,12 +36,14 @@ public class AssistantModel implements Model, java.io.Serializable {
      * @param outstanding The outstanding balance (in pence)
      * @param interest The annual interest rate (1.0 = 100%)
      * @param minPayment The next minimum payment amount (in pence)
+     * @return The debt that was created and added
      */
     @Override
-    public void addDebt(String desc, int outstanding, double interest,
+    public Debt addDebt(String desc, int outstanding, double interest,
             int minPayment) {
         Debt debt = new Debt(desc, outstanding, interest, minPayment);
         debts.add(debt);
+        return debt;
     }
 
     /**

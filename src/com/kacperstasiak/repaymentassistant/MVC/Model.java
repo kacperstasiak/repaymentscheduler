@@ -20,8 +20,9 @@ public interface Model {
      * @param outstanding The outstanding balance (in pence)
      * @param interest The annual interest rate (1.0 = 100%)
      * @param minPayment The next minimum payment amount (in pence)
+     * @return The debt that was added
      */
-    public void addDebt(String desc, int outstanding, double interest, int minPayment);
+    public Debt addDebt(String desc, int outstanding, double interest, int minPayment);
 
     /**
      * Removes a debt from the debts list

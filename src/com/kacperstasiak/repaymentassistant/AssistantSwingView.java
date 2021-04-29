@@ -53,6 +53,10 @@ public class AssistantSwingView implements View {
      */
     @Override
     public void update() {
+        // Don't allow updating if main view was not initialised
+        if (mainView == null) {
+            throw new IllegalStateException("Cannot update before main view is initialised.");
+        }
         mainView.update();
     }
 
@@ -61,9 +65,12 @@ public class AssistantSwingView implements View {
      */
     @Override
     public void close() {
-        // Make the GUI invisible and removes it
-        mainView.setVisible(false);
-        mainView.dispose();
+        // Make sure the main view was initialised
+        if (mainView != null) {
+            // Make the GUI invisible and removes it
+            mainView.setVisible(false);
+            mainView.dispose();
+        }
     }
 
     /**

@@ -16,7 +16,7 @@ public class Main {
         // Ensures the controller's shutdown function is called when quitting 
         // the app on macOS, thus ensuring the shutdown callback is triggered
         // in this function, so that the model is saved.
-        com.apple.eawt.Application.getApplication().setQuitStrategy(com.apple.eawt.QuitStrategy.CLOSE_ALL_WINDOWS);
+        //com.apple.eawt.Application.getApplication().setQuitStrategy(com.apple.eawt.QuitStrategy.CLOSE_ALL_WINDOWS);
 
         Model model;
 
