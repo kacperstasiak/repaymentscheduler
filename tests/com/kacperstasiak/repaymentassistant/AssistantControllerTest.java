@@ -1,18 +1,18 @@
 package com.kacperstasiak.repaymentassistant;
 
-import com.kacperstasiak.repaymentassistant.MVC.Controller;
 import com.kacperstasiak.repaymentassistant.MVC.Model;
 import com.kacperstasiak.repaymentassistant.MVC.View;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 
 /**
  *
  * @author Kacper Stasiak
  */
 public class AssistantControllerTest {
+
+    static final String DEBT_NAME_1 = "Test Debt 1";
+
     /**
      * Test of run method, of class AssistantController.
      */
@@ -72,8 +72,8 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
-        String ref = "Test Debt 1";
+
+        String ref = DEBT_NAME_1;
         int outstanding = 100;
         double interest = 12.4 / 100;
         int minpay = 40;
@@ -94,14 +94,14 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
-        Debt editing = model.addDebt("Test Debt 1", 100, 0.1, 10);
+
+        Debt editing = model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         String ref = "Test Debt 2";
         int outstanding = 100;
         double interest = 0.1;
         int minpay = 10;
         instance.editDebt(editing, ref, outstanding, interest, minpay);
-        
+
         assertEquals(ref, editing.getDescription());
         assertEquals(outstanding, editing.getOutstandingBalance());
         assertEquals(interest, editing.getInterestRate(), 0.0);
@@ -117,14 +117,14 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
-        Debt editing = model.addDebt("Test Debt 1", 100, 0.1, 10);
-        String ref = "Test Debt 1";
+
+        Debt editing = model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        String ref = DEBT_NAME_1;
         int outstanding = 400;
         double interest = 0.1;
         int minpay = 10;
         instance.editDebt(editing, ref, outstanding, interest, minpay);
-        
+
         assertEquals(ref, editing.getDescription());
         assertEquals(outstanding, editing.getOutstandingBalance());
         assertEquals(interest, editing.getInterestRate(), 0.0);
@@ -140,14 +140,14 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
-        Debt editing = model.addDebt("Test Debt 1", 100, 0.1, 10);
-        String ref = "Test Debt 1";
+
+        Debt editing = model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        String ref = DEBT_NAME_1;
         int outstanding = 100;
         double interest = 0.2;
         int minpay = 10;
         instance.editDebt(editing, ref, outstanding, interest, minpay);
-        
+
         assertEquals(ref, editing.getDescription());
         assertEquals(outstanding, editing.getOutstandingBalance());
         assertEquals(interest, editing.getInterestRate(), 0.0);
@@ -163,14 +163,14 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
-        Debt editing = model.addDebt("Test Debt 1", 100, 0.1, 10);
-        String ref = "Test Debt 1";
+
+        Debt editing = model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        String ref = DEBT_NAME_1;
         int outstanding = 100;
         double interest = 0.1;
         int minpay = 20;
         instance.editDebt(editing, ref, outstanding, interest, minpay);
-        
+
         assertEquals(ref, editing.getDescription());
         assertEquals(outstanding, editing.getOutstandingBalance());
         assertEquals(interest, editing.getInterestRate(), 0.0);
@@ -186,14 +186,14 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
-        Debt editing = model.addDebt("Test Debt 1", 100, 0.1, 10);
+
+        Debt editing = model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         String ref = "Test Debt 2";
         int outstanding = 400;
         double interest = 0.2;
         int minpay = 20;
         instance.editDebt(editing, ref, outstanding, interest, minpay);
-        
+
         assertEquals(ref, editing.getDescription());
         assertEquals(outstanding, editing.getOutstandingBalance());
         assertEquals(interest, editing.getInterestRate(), 0.0);
@@ -209,7 +209,7 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
+
         int budget = 0;
         instance.updateBudgetAmount(budget);
     }
@@ -223,7 +223,7 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
+
         int budget = 100;
         instance.updateBudgetAmount(budget);
     }
@@ -237,10 +237,10 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
+
         int budget = -100;
         instance.updateBudgetAmount(budget);
-        
+
         // ensure it is capped at 0
         assertEquals(0, model.getBudgetAmount());
     }
@@ -248,13 +248,13 @@ public class AssistantControllerTest {
     /**
      * Test of updateView method, of class AssistantController.
      */
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testUpdateViewBeforeInit() {
         System.out.println("updateView before init");
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
+
         instance.updateView();
     }
 
@@ -267,21 +267,21 @@ public class AssistantControllerTest {
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
-        Debt debt = model.addDebt("Test Debt 1", 100, 0.1, 10);
+
+        Debt debt = model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         assertEquals(1, model.getDebtsCount());
-        
+
         try {
             instance.deleteDebt(debt);
         } catch (IllegalStateException ex) {
             // illegal state exception expected due to main view not existing
         }
-        
+
         assertEquals(0, model.getDebtsCount());
     }
 
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
+    private static class SuccessException extends RuntimeException {
+    }
     
     /**
      * Test of onShutdown method, of class AssistantController.
@@ -289,25 +289,22 @@ public class AssistantControllerTest {
     @Test
     public void testOnShutdown() {
         System.out.println("onShutdown");
-        
+
         //exceptionRule.expect(RuntimeException.class);
         //exceptionRule.expectMessage("success");
-        
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
-        
+
         instance.onShutdown(() -> {
-            throw new RuntimeException("success");
+            throw new SuccessException();
         });
-            
+
         // Test if the callback gets called
         try {
             instance.shutdown();
-        } catch (RuntimeException ex) {
-            if (ex.getMessage().equals("success")) {
-                return; // success
-            }
+        } catch (SuccessException ex) {
+            return; // success
         }
         fail("Callback not received");
     }

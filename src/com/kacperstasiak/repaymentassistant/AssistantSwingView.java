@@ -1,6 +1,6 @@
 package com.kacperstasiak.repaymentassistant;
 
-import com.kacperstasiak.repaymentassistant.UI.ScheduleTableModel;
+import com.kacperstasiak.repaymentassistant.UI.DebtTableModel;
 import com.kacperstasiak.repaymentassistant.MVC.View;
 import com.kacperstasiak.repaymentassistant.MVC.Model;
 import com.kacperstasiak.repaymentassistant.MVC.Controller;
@@ -40,7 +40,7 @@ public class AssistantSwingView implements View {
 
         // Create the GUI
         Model model = controller.getModel();
-        ScheduleTableModel tmodel = new ScheduleTableModel(model);
+        DebtTableModel tmodel = new DebtTableModel(model);
 
         java.awt.EventQueue.invokeLater(() -> {
             mainView = new DebtsListFrame(tmodel, controller);
@@ -96,8 +96,8 @@ public class AssistantSwingView implements View {
      */
     @Override
     public Model getModel() {
-        Controller contr = getController(); // throws if not set up
-        return contr.getModel();
+        Controller control = getController(); // throws if not set up
+        return control.getModel();
     }
 
     /**

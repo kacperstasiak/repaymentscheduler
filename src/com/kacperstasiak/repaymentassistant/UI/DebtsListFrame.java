@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
  */
 public class DebtsListFrame extends javax.swing.JFrame {
 
-    private ScheduleTableModel tableModel = null;
+    private DebtTableModel tableModel = null;
     private Controller controller = null;
     private ConfirmDialog confirmDialog;
     private AddEditFrame addEditMenu;
@@ -22,7 +22,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
      * @param model The tableModel class for the schedule
      * @param controller The controller class for the schedule
      */
-    public DebtsListFrame(ScheduleTableModel model, Controller controller) {
+    public DebtsListFrame(DebtTableModel model, Controller controller) {
         this.tableModel = model;
         this.controller = controller;
         initComponents();

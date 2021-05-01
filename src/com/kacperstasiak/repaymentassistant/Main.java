@@ -12,6 +12,11 @@ import com.kacperstasiak.repaymentassistant.MVC.Controller;
  */
 public class Main {
 
+    /**
+     * The main Java entrypoint function
+     *
+     * @param args
+     */
     public static void main(String args[]) {
         // Ensures the controller's shutdown function is called when quitting 
         // the app on macOS, thus ensuring the shutdown callback is triggered
@@ -27,12 +32,10 @@ public class Main {
 
         // Add callback handler when window closes
         controller.onShutdown(
-                () -> {
-                    // Save the model
-                    AssistantModel.save((AssistantModel) model, "./debts.ser"); //NOI18N
-                }
+            () -> {
+                // Save the model
+                AssistantModel.save((AssistantModel) model, "./debts.ser"); //NOI18N
+            }
         );
     }
-;
-
 }

@@ -11,6 +11,11 @@ import java.util.Map;
  */
 public interface Model {
 
+    /**
+     * Returns the list of current debts
+     *
+     * @return The list of debts
+     */
     public List<Debt> getDebts();
 
     /**

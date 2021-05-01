@@ -8,8 +8,8 @@ import com.kacperstasiak.repaymentassistant.MVC.Controller.Callback;
  */
 public class ConfirmDialog extends javax.swing.JFrame {
 
-    private DebtsListFrame parent;
-    private Callback callback;
+    private final DebtsListFrame parent;
+    private final Callback callback;
 
     /**
      * Creates new form ConfirmDialog
