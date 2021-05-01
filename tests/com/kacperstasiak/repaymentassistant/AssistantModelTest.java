@@ -805,7 +805,65 @@ public class AssistantModelTest {
         AssistantModel.save(model, filepath);
         AssistantModel result = AssistantModel.load(filepath);
 
-        assertArrayEquals(model.getDebts().toArray(), result.getDebts().toArray());
+        assertEquals(model.getDebtsCount(), result.getDebtsCount());
+        for (int i = 0; i < model.getDebtsCount(); i++) {
+            Debt debt1 = model.getDebts().get(i);
+            Debt debt2 = result.getDebts().get(i);
+            assertEquals(debt1.getDescription(), debt2.getDescription());
+            assertEquals(debt1.getOutstandingBalance(), debt2.getOutstandingBalance());
+            assertEquals(debt1.getInterestRate(), debt2.getInterestRate(), 0.0);
+            assertEquals(debt1.getMinimumPayment(), debt2.getMinimumPayment());
+        }
+    }
+
+    /**
+     * Test of load method, of class AssistantModel.
+     */
+    @Test
+    public void testSaveLoad1Debt() {
+        System.out.println("save 1 debt and load");
+        String filepath = "./testsave.ser";
+
+        AssistantModel model = new AssistantModel();
+        model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        AssistantModel.save(model, filepath);
+        AssistantModel result = AssistantModel.load(filepath);
+
+        assertEquals(model.getDebtsCount(), result.getDebtsCount());
+        for (int i = 0; i < model.getDebtsCount(); i++) {
+            Debt debt1 = model.getDebts().get(i);
+            Debt debt2 = result.getDebts().get(i);
+            assertEquals(debt1.getDescription(), debt2.getDescription());
+            assertEquals(debt1.getOutstandingBalance(), debt2.getOutstandingBalance());
+            assertEquals(debt1.getInterestRate(), debt2.getInterestRate(), 0.0);
+            assertEquals(debt1.getMinimumPayment(), debt2.getMinimumPayment());
+        }
+    }
+
+    /**
+     * Test of load method, of class AssistantModel.
+     */
+    @Test
+    public void testSaveLoad3Debts() {
+        System.out.println("save 3 debts and load");
+        String filepath = "./testsave.ser";
+
+        AssistantModel model = new AssistantModel();
+        model.addDebt(DEBT_NAME_1, 200, 0.1, 10);
+        model.addDebt(DEBT_NAME_2, 1000, 0.15, 150);
+        model.addDebt(DEBT_NAME_3, 150, 0.2, 100);
+        AssistantModel.save(model, filepath);
+        AssistantModel result = AssistantModel.load(filepath);
+
+        assertEquals(model.getDebtsCount(), result.getDebtsCount());
+        for (int i = 0; i < model.getDebtsCount(); i++) {
+            Debt debt1 = model.getDebts().get(i);
+            Debt debt2 = result.getDebts().get(i);
+            assertEquals(debt1.getDescription(), debt2.getDescription());
+            assertEquals(debt1.getOutstandingBalance(), debt2.getOutstandingBalance());
+            assertEquals(debt1.getInterestRate(), debt2.getInterestRate(), 0.0);
+            assertEquals(debt1.getMinimumPayment(), debt2.getMinimumPayment());
+        }
     }
 
 }

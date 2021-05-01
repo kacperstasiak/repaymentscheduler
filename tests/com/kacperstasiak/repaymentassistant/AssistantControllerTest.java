@@ -282,7 +282,7 @@ public class AssistantControllerTest {
 
     private static class SuccessException extends RuntimeException {
     }
-    
+
     /**
      * Test of onShutdown method, of class AssistantController.
      */
