@@ -48,9 +48,9 @@ public class AssistantSwingViewTest {
     /**
      * Test of update method, of class AssistantSwingView.
      */
-    @Test(expected = IllegalStateException.class)
-    public void testUpdateBeforeMainViewFullyInit() {
-        System.out.println("update after init() but before Swing initialises main view");
+    @Test
+    public void testUpdate() {
+        System.out.println("update after init()");
         AssistantSwingView instance = new AssistantSwingView();
         Model model = new AssistantModel();
         Controller control = new AssistantController(model, instance);
@@ -77,6 +77,19 @@ public class AssistantSwingViewTest {
         AssistantSwingView instance = new AssistantSwingView();
         Model model = new AssistantModel();
         Controller control = new AssistantController(model, instance);
+        instance.close();
+    }
+
+    /**
+     * Test of close method, of class AssistantSwingView.
+     */
+    @Test
+    public void testCloseAfterInit() {
+        System.out.println("close after init");
+        AssistantSwingView instance = new AssistantSwingView();
+        Model model = new AssistantModel();
+        Controller control = new AssistantController(model, instance);
+        instance.init();
         instance.close();
     }
 
@@ -146,6 +159,19 @@ public class AssistantSwingViewTest {
         instance.setController(control2);
 
         assertEquals(control2, instance.getController());
+    }
+
+    /**
+     * Test of setController method, of class AssistantSwingView.
+     */
+    @Test(expected=IllegalStateException.class)
+    public void testSetControllerNull() {
+        System.out.println("setController to null");
+        AssistantSwingView instance = new AssistantSwingView();
+        Model model = new AssistantModel();
+        Controller control = new AssistantController(model, instance);
+
+        instance.setController(null);
     }
 
     /**

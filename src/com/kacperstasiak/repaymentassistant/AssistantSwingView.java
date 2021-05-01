@@ -42,10 +42,10 @@ public class AssistantSwingView implements View {
         Model model = controller.getModel();
         DebtTableModel tmodel = new DebtTableModel(model);
 
-        java.awt.EventQueue.invokeLater(() -> {
+        //java.awt.EventQueue.invokeLater(() -> {
             mainView = new DebtsListFrame(tmodel, controller);
             mainView.setVisible(true);
-        });
+        //});
     }
 
     /**

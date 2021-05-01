@@ -104,15 +104,6 @@ public final class DebtTableModel extends AbstractTableModel {
     }
 
     /**
-     * Sets the repayment budget amount
-     *
-     * @param budget New budget amount (in pence)
-     */
-    public void setBudgetAmount(int budget) {
-        model.setBudgetAmount(budget);
-    }
-
-    /**
      * Updates the repayment suggestions
      */
     public void update() {

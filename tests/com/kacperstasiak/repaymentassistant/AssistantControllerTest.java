@@ -29,11 +29,24 @@ public class AssistantControllerTest {
      * Test of shutdown method, of class AssistantController.
      */
     @Test
-    public void testShutdown() {
-        System.out.println("shutdown");
+    public void testShutdownBeforeInit() {
+        System.out.println("shutdown before init");
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
+        instance.shutdown();
+    }
+
+    /**
+     * Test of shutdown method, of class AssistantController.
+     */
+    @Test
+    public void testShutdown() {
+        System.out.println("shutdown after init");
+        Model model = new AssistantModel();
+        View view = new AssistantSwingView();
+        AssistantController instance = new AssistantController(model, view);
+        instance.run();
         instance.shutdown();
     }
 
@@ -259,11 +272,24 @@ public class AssistantControllerTest {
     }
 
     /**
+     * Test of updateView method, of class AssistantController.
+     */
+    @Test
+    public void testUpdateView() {
+        System.out.println("updateView after init");
+        Model model = new AssistantModel();
+        View view = new AssistantSwingView();
+        AssistantController instance = new AssistantController(model, view);
+        instance.run();
+        instance.updateView();
+    }
+
+    /**
      * Test of deleteDebt method, of class AssistantController.
      */
     @Test
-    public void testDeleteDebt() {
-        System.out.println("deleteDebt");
+    public void testDeleteDebtBeforeInit() {
+        System.out.println("deleteDebt before init");
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
@@ -280,18 +306,35 @@ public class AssistantControllerTest {
         assertEquals(0, model.getDebtsCount());
     }
 
+    /**
+     * Test of deleteDebt method, of class AssistantController.
+     */
+    @Test
+    public void testDeleteDebt() {
+        System.out.println("deleteDebt after init");
+        Model model = new AssistantModel();
+        View view = new AssistantSwingView();
+        AssistantController instance = new AssistantController(model, view);
+        instance.run();
+
+        Debt debt = model.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        assertEquals(1, model.getDebtsCount());
+
+        instance.deleteDebt(debt);
+
+        assertEquals(0, model.getDebtsCount());
+    }
+
     private static class SuccessException extends RuntimeException {
     }
 
     /**
      * Test of onShutdown method, of class AssistantController.
      */
-    @Test
+    @Test(expected=SuccessException.class)
     public void testOnShutdown() {
         System.out.println("onShutdown");
 
-        //exceptionRule.expect(RuntimeException.class);
-        //exceptionRule.expectMessage("success");
         Model model = new AssistantModel();
         View view = new AssistantSwingView();
         AssistantController instance = new AssistantController(model, view);
@@ -301,12 +344,7 @@ public class AssistantControllerTest {
         });
 
         // Test if the callback gets called
-        try {
-            instance.shutdown();
-        } catch (SuccessException ex) {
-            return; // success
-        }
-        fail("Callback not received");
+        instance.shutdown();
     }
 
 }

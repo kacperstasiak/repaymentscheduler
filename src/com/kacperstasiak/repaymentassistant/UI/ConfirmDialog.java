@@ -36,7 +36,7 @@ public class ConfirmDialog extends javax.swing.JFrame {
         delButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings"); // NOI18N
         setTitle(bundle.getString("CONFIRM DELETE")); // NOI18N
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
@@ -47,8 +47,8 @@ public class ConfirmDialog extends javax.swing.JFrame {
             }
         });
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -107,14 +107,14 @@ public class ConfirmDialog extends javax.swing.JFrame {
         parent.closeDialog();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        parent.closeDialog();
-    }//GEN-LAST:event_formWindowClosing
-
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
         toFront();
         requestFocus();
     }//GEN-LAST:event_formWindowLostFocus
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        parent.closeDialog();
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

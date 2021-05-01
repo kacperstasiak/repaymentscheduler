@@ -11,8 +11,8 @@ import javax.swing.SwingUtilities;
  */
 public class DebtsListFrame extends javax.swing.JFrame {
 
-    private DebtTableModel tableModel = null;
-    private Controller controller = null;
+    private final DebtTableModel tableModel;
+    private final Controller controller;
     private ConfirmDialog confirmDialog;
     private AddEditFrame addEditMenu;
 

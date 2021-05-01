@@ -85,6 +85,11 @@ public class AddEditFrame extends javax.swing.JFrame {
                 formWindowLostFocus(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         refLabel.setLabelFor(refInput);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings"); // NOI18N
@@ -271,6 +276,10 @@ public class AddEditFrame extends javax.swing.JFrame {
         toFront();
         requestFocus();
     }//GEN-LAST:event_formWindowLostFocus
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        parent.closeAddEditMenu();
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField balInput;

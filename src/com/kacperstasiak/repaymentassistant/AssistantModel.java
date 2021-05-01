@@ -204,16 +204,13 @@ public class AssistantModel implements Model, java.io.Serializable {
 
         // Sort the debts list by interest
         debts.sort((Debt o1, Debt o2) -> {
-            if (o1.getInterestRate() == o2.getInterestRate()) {
-                return 0;
-            }
             if (o1.getInterestRate() > o2.getInterestRate()) {
                 return -1;
-            }
-            if (o1.getInterestRate() < o2.getInterestRate()) {
+            } else if (o1.getInterestRate() < o2.getInterestRate()) {
                 return 1;
+            } else {
+                return 0;
             }
-            return 0;
         });
 
         // First pass: distribute budget to cover all minimum payments if possible

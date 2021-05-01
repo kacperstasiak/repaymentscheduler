@@ -590,7 +590,7 @@ public class AssistantModelTest {
 
         instance.setBudgetAmount(30);
         expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 6);  // less than minimum
-        expResult.put(instance.addDebt(DEBT_NAME_1, 2000, 0.10, 20), 0);  // nothing
+        expResult.put(instance.addDebt(DEBT_NAME_1, 2000, 0.08, 20), 0);  // nothing
         expResult.put(instance.addDebt(DEBT_NAME_2, 400, 0.21, 4), 4);    // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_3, 600, 0.08, 6), 0);    // nothing
         expResult.put(instance.addDebt(DEBT_NAME_4, 2000, 0.16, 20), 20); // full minimum payment
@@ -613,7 +613,7 @@ public class AssistantModelTest {
 
         instance.setBudgetAmount(60);
         expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_3, 400, 0.21, 4), 4);    // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 20); // full minimum payment
@@ -636,7 +636,7 @@ public class AssistantModelTest {
 
         instance.setBudgetAmount(600);
         expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_3, 400, 0.21, 4), 400);  // full outstanding balance
         expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 164);// full minimum payment + 144 of remaing budget
@@ -659,7 +659,7 @@ public class AssistantModelTest {
 
         instance.setBudgetAmount(30);
         expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10);  // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 0);  // nothing
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 0);  // nothing
         expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 0);    // nothing
         expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 20); // full minimum payment
 
@@ -681,7 +681,7 @@ public class AssistantModelTest {
 
         instance.setBudgetAmount(60);
         expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 24); // beyond full minimum payment
 
@@ -700,7 +700,7 @@ public class AssistantModelTest {
 
         instance.setBudgetAmount(600);
         expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
         expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 564); // beyond full minimum payment
 
@@ -864,6 +864,20 @@ public class AssistantModelTest {
             assertEquals(debt1.getInterestRate(), debt2.getInterestRate(), 0.0);
             assertEquals(debt1.getMinimumPayment(), debt2.getMinimumPayment());
         }
+    }
+
+    /**
+     * Test of load method, of class AssistantModel.
+     */
+    @Test
+    public void testLoadMissingFile() {
+        System.out.println("load from nonexisting file");
+        String filepath = "./nonexistantfile.ser";
+
+        AssistantModel result = AssistantModel.load(filepath);
+        
+        // ensure it returns an empty model
+        assertEquals(result.getDebtsCount(), 0);
     }
 
 }
