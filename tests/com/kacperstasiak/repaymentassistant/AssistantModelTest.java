@@ -15,25 +15,6 @@ import static org.junit.Assert.*;
  */
 public class AssistantModelTest {
 
-    public AssistantModelTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of addDebt method, of class AssistantModel.
      */
@@ -51,7 +32,7 @@ public class AssistantModelTest {
     /**
      * Test of addDebt method, of class AssistantModel.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testAddDebtOutstandingZero() {
         System.out.println("addDebt outstanding balance zero");
         String desc = "Test Debt 1";
