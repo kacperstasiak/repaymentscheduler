@@ -239,9 +239,6 @@
           <Color blue="0" green="0" red="c8" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/kacperstasiak/repaymentassistant/strings.properties" key="ADDEDIT ERROR" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
       </Properties>
     </Component>
   </SubComponents>

@@ -52,7 +52,7 @@ public class ConfirmDialog extends javax.swing.JFrame {
             }
         });
 
-        dialogLabel.setText(bundle.getString("CONFIRM DELETE LABEL")); // NOI18N
+        dialogLabel.setText("<html>" +  bundle.getString("CONFIRM DELETE LABEL") + "</html>");
 
         delButton.setText(bundle.getString("DELETE BUTTON")); // NOI18N
         delButton.addActionListener(new java.awt.event.ActionListener() {

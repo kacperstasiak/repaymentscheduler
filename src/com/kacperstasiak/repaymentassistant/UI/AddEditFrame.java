@@ -28,6 +28,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         balInput.setValue(0.0);
         rateInput.setValue(0.0);
         payInput.setValue(0.0);
+        errorLabel.setText(""); //NOI18N
         errorLabel.setVisible(false);
         this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("ADD DEBT"));
     }
@@ -48,6 +49,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         balInput.setValue(debt.getOutstandingBalance() / 100);
         rateInput.setValue(debt.getInterestRate() * 100);
         payInput.setValue(debt.getMinimumPayment() / 100);
+        errorLabel.setText(""); //NOI18N
         errorLabel.setVisible(false);
         this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("EDIT DEBT"));
     }
@@ -184,7 +186,6 @@ public class AddEditFrame extends javax.swing.JFrame {
 
         errorLabel.setForeground(new java.awt.Color(200, 0, 0));
         errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        errorLabel.setText(bundle.getString("ADDEDIT ERROR")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,7 +229,7 @@ public class AddEditFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-        errorLabel.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("ADDEDIT ERROR"));
+        errorLabel.setText(""); //NOI18N
         errorLabel.setVisible(false);
         String ref = ((String) refInput.getValue());
         double bal = ((Number) balInput.getValue()).doubleValue();
