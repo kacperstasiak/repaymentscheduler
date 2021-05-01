@@ -18,7 +18,8 @@ import java.util.Map;
  * @author Kacper Stasiak
  */
 public class AssistantModel implements Model, java.io.Serializable {
-
+    private static final long serialVersionUID = 3005;
+        
     List<Debt> debts;
     private int budget;
 

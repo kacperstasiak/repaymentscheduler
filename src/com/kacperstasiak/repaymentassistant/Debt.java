@@ -6,6 +6,7 @@ package com.kacperstasiak.repaymentassistant;
  * @author Kacper Stasiak
  */
 public class Debt implements java.io.Serializable {
+    private static final long serialVersionUID = 3006;
 
     private String reference;
     private int outstandingBalance;
