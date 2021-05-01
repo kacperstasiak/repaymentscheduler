@@ -1,9 +1,5 @@
 package com.kacperstasiak.repaymentassistant;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -13,24 +9,8 @@ import static org.junit.Assert.*;
  */
 public class DebtTest {
 
-    public DebtTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
+    private static final String DEBT_NAME_1 = "Test Debt 1";
+    private static final String DEBT_NAME_8 = "Test Debt 8";
 
     /**
      * Test of constructor of class Debt. Negative balance.
@@ -38,7 +18,7 @@ public class DebtTest {
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorNegativeBalance() {
         System.out.println("constructor - negative balance");
-        Debt instance = new Debt("Test Debt 1", -10, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, -10, 0.1, 10);
     }
 
     /**
@@ -47,7 +27,7 @@ public class DebtTest {
     @Test
     public void testConstructorZeroBalance() {
         System.out.println("constructor - zero balance");
-        Debt instance = new Debt("Test Debt 1", 0, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 0, 0.1, 10);
     }
 
     /**
@@ -56,7 +36,7 @@ public class DebtTest {
     @Test
     public void testConstructorZeroInterest() {
         System.out.println("constructor - zero interest");
-        Debt instance = new Debt("Test Debt 1", 100, 0, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0, 10);
     }
 
     /**
@@ -65,7 +45,7 @@ public class DebtTest {
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorNegativeInterest() {
         System.out.println("constructor - negative interest");
-        Debt instance = new Debt("Test Debt 1", 100, -0.2, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, -0.2, 10);
     }
 
     /**
@@ -74,7 +54,7 @@ public class DebtTest {
     @Test
     public void testConstructorValidInterest() {
         System.out.println("constructor - valid interest");
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
     }
 
     /**
@@ -83,7 +63,7 @@ public class DebtTest {
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorTooHighInterest() {
         System.out.println("constructor - too high interest");
-        Debt instance = new Debt("Test Debt 1", 100, 1.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 1.1, 10);
     }
 
     /**
@@ -92,8 +72,8 @@ public class DebtTest {
     @Test
     public void testGetDescription() {
         System.out.println("getDescription");
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
-        String expResult = "Test Debt 1";
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
+        String expResult = DEBT_NAME_1;
         String result = instance.getDescription();
         assertEquals(expResult, result);
     }
@@ -103,9 +83,9 @@ public class DebtTest {
      */
     @Test
     public void testSetDescription() {
-        System.out.println("setDescription to Test Debt 9");
-        String desc = "Test Debt 9";
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        System.out.println("setDescription");
+        String desc = DEBT_NAME_8;
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setDescription(desc);
         assertEquals(desc, instance.getDescription());
     }
@@ -117,7 +97,7 @@ public class DebtTest {
     public void testSetDescriptionNumbers() {
         System.out.println("setDescription to 1234567");
         String desc = "1234567";
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setDescription(desc);
         assertEquals(desc, instance.getDescription());
     }
@@ -128,7 +108,7 @@ public class DebtTest {
     @Test
     public void testGetOutstandingBalance() {
         System.out.println("getOutstandingBalance");
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         int expResult = 100;
         int result = instance.getOutstandingBalance();
         assertEquals(expResult, result);
@@ -141,7 +121,7 @@ public class DebtTest {
     public void testSetOutstandingBalance() {
         System.out.println("setOutstandingBalance to 1,000");
         int amount = 1000;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setOutstandingBalance(amount);
         assertEquals(amount, instance.getOutstandingBalance());
     }
@@ -153,7 +133,7 @@ public class DebtTest {
     public void testSetOutstandingBalanceZero() {
         System.out.println("setOutstandingBalance to 0");
         int amount = 0;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setOutstandingBalance(amount);
         assertEquals(amount, instance.getOutstandingBalance());
     }
@@ -165,7 +145,7 @@ public class DebtTest {
     public void testSetOutstandingBalanceNegative() {
         System.out.println("setOutstandingBalance to -100");
         int amount = -100;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setOutstandingBalance(amount);
     }
 
@@ -175,7 +155,7 @@ public class DebtTest {
     @Test
     public void testGetInterestRate() {
         System.out.println("getInterestRate");
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         double expResult = 0.1;
         double result = instance.getInterestRate();
         assertEquals(expResult, result, 0.0);
@@ -188,7 +168,7 @@ public class DebtTest {
     public void testSetInterestRate() {
         System.out.println("setInterestRate to 0.2%");
         double rate = 0.2;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setInterestRate(rate);
         assertEquals(rate, instance.getInterestRate(), 0.0);
     }
@@ -200,7 +180,7 @@ public class DebtTest {
     public void testSetInterestRateZero() {
         System.out.println("setInterestRate to 0%");
         double rate = 0.0;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setInterestRate(rate);
         assertEquals(rate, instance.getInterestRate(), 0.0);
     }
@@ -212,7 +192,7 @@ public class DebtTest {
     public void testSetInterestRateNegative() {
         System.out.println("setInterestRate to -20%");
         double rate = -0.2;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setInterestRate(rate);
     }
 
@@ -223,7 +203,7 @@ public class DebtTest {
     public void testSetInterestRateTooHigh() {
         System.out.println("setInterestRate to 200%");
         double rate = 2.0;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setInterestRate(rate);
     }
 
@@ -233,7 +213,7 @@ public class DebtTest {
     @Test
     public void testGetMinimumPayment() {
         System.out.println("getMinimumPayment to 10");
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         int expResult = 10;
         int result = instance.getMinimumPayment();
         assertEquals(expResult, result);
@@ -246,7 +226,7 @@ public class DebtTest {
     public void testSetMinimumPayment() {
         System.out.println("setMinimumPayment to 50");
         int amount = 50;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setMinimumPayment(amount);
         assertEquals(amount, instance.getMinimumPayment());
     }
@@ -258,7 +238,7 @@ public class DebtTest {
     public void testSetMinimumPaymentZero() {
         System.out.println("setMinimumPayment to 0");
         int amount = 0;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setMinimumPayment(amount);
         assertEquals(amount, instance.getMinimumPayment());
     }
@@ -270,7 +250,7 @@ public class DebtTest {
     public void testSetMinimumPaymentNegative() {
         System.out.println("setMinimumPayment to -50");
         int amount = -50;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setMinimumPayment(amount);
     }
 
@@ -281,7 +261,7 @@ public class DebtTest {
     public void testSetMinimumPaymentBeyondOutstandingBalance() {
         System.out.println("setMinimumPayment to 150");
         int amount = 150;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setMinimumPayment(amount);
 
         // Expected capped to outstanding balance
@@ -295,7 +275,7 @@ public class DebtTest {
     public void testSetMinimumPaymentEqualToOutstandingBalance() {
         System.out.println("setMinimumPayment to 100");
         int amount = 100;
-        Debt instance = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt instance = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setMinimumPayment(amount);
 
         // Expected capped to outstanding balance

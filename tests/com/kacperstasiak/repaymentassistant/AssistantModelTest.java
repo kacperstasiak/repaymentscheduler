@@ -2,10 +2,6 @@ package com.kacperstasiak.repaymentassistant;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -15,13 +11,22 @@ import static org.junit.Assert.*;
  */
 public class AssistantModelTest {
 
+    private static final String DEBT_NAME_1 = "Test Debt 1";
+    private static final String DEBT_NAME_2 = "Test Debt 2";
+    private static final String DEBT_NAME_3 = "Test Debt 3";
+    private static final String DEBT_NAME_4 = "Test Debt 4";
+    private static final String DEBT_NAME_5 = "Test Debt 5";
+    private static final String DEBT_NAME_6 = "Test Debt 6";
+    private static final String DEBT_NAME_7 = "Test Debt 7";
+    private static final String DEBT_NAME_8 = "Test Debt 8";
+
     /**
      * Test of addDebt method, of class AssistantModel.
      */
     @Test
     public void testAddDebtValid() {
         System.out.println("addDebt valid debt data");
-        String desc = "Test Debt 1";
+        String desc = DEBT_NAME_1;
         int outstanding = 100;
         double interest = 0.1;
         int minPayment = 10;
@@ -35,7 +40,7 @@ public class AssistantModelTest {
     @Test
     public void testAddDebtOutstandingZero() {
         System.out.println("addDebt outstanding balance zero");
-        String desc = "Test Debt 1";
+        String desc = DEBT_NAME_1;
         int outstanding = 0;
         double interest = 0.1;
         int minPayment = 10;
@@ -49,7 +54,7 @@ public class AssistantModelTest {
     @Test(expected = IllegalArgumentException.class)
     public void testAddDebtInvalidOutstanding() {
         System.out.println("addDebt bad outstanding balance");
-        String desc = "Test Debt 1";
+        String desc = DEBT_NAME_1;
         int outstanding = -100;
         double interest = 0.1;
         int minPayment = 10;
@@ -63,7 +68,7 @@ public class AssistantModelTest {
     @Test(expected = IllegalArgumentException.class)
     public void testAddDebtInvalidInterestNegative() {
         System.out.println("addDebt bad interest negative value");
-        String desc = "Test Debt 1";
+        String desc = DEBT_NAME_1;
         int outstanding = 100;
         double interest = -0.2;
         int minPayment = 10;
@@ -77,7 +82,7 @@ public class AssistantModelTest {
     @Test(expected = IllegalArgumentException.class)
     public void testAddDebtInvalidInterestTooHigh() {
         System.out.println("addDebt bad interest too high");
-        String desc = "Test Debt 1";
+        String desc = DEBT_NAME_1;
         int outstanding = 100;
         double interest = 3.2;
         int minPayment = 10;
@@ -91,7 +96,7 @@ public class AssistantModelTest {
     @Test(expected = IllegalArgumentException.class)
     public void testAddDebtMinPayNegative() {
         System.out.println("addDebt bad minimum pay");
-        String desc = "Test Debt 1";
+        String desc = DEBT_NAME_1;
         int outstanding = 100;
         double interest = 0.1;
         int minPayment = -20;
@@ -105,7 +110,7 @@ public class AssistantModelTest {
     @Test
     public void testAddDebtMinPayZero() {
         System.out.println("addDebt zero minimum pay");
-        String desc = "Test Debt 1";
+        String desc = DEBT_NAME_1;
         int outstanding = 100;
         double interest = 0.1;
         int minPayment = 0;
@@ -119,7 +124,7 @@ public class AssistantModelTest {
     @Test()
     public void testRemoveDebtNotAdded() {
         System.out.println("removeDebt that wasn't added");
-        Debt debt = new Debt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = new Debt(DEBT_NAME_1, 100, 0.1, 10);
         AssistantModel instance = new AssistantModel();
         instance.removeDebt(debt);
     }
@@ -131,7 +136,7 @@ public class AssistantModelTest {
     public void testRemoveDebt() {
         System.out.println("removeDebt that was added");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         instance.removeDebt(debt);
     }
 
@@ -142,8 +147,8 @@ public class AssistantModelTest {
     public void testGetDebtRef() {
         System.out.println("getDebtRef");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
-        String expResult = "Test Debt 1";
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        String expResult = DEBT_NAME_1;
         String result = instance.getDebtRef(debt);
         assertEquals(expResult, result);
     }
@@ -155,9 +160,9 @@ public class AssistantModelTest {
     public void testGetDebtRefDescChangedExternally() {
         System.out.println("getDebtRef external change");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
-        debt.setDescription("Test Debt 9");
-        String expResult = "Test Debt 9";
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        debt.setDescription(DEBT_NAME_8);
+        String expResult = DEBT_NAME_8;
         String result = instance.getDebtRef(debt);
         assertEquals(expResult, result);
     }
@@ -168,9 +173,9 @@ public class AssistantModelTest {
     @Test
     public void testSetDebtRef() {
         System.out.println("setDebtRef");
-        String ref = "Test Debt 9";
+        String ref = DEBT_NAME_8;
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         instance.setDebtRef(debt, ref);
         assertEquals(ref, instance.getDebtRef(debt));
         assertEquals(ref, debt.getDescription());
@@ -183,7 +188,7 @@ public class AssistantModelTest {
     public void testGetDebtInterestRate() {
         System.out.println("getDebtInterestRate");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         double expResult = 0.1;
         double result = instance.getDebtInterestRate(debt);
         assertEquals(expResult, result, 0.0);
@@ -196,7 +201,7 @@ public class AssistantModelTest {
     public void testGetDebtInterestRateInvalidRateChange() {
         System.out.println("getDebtInterestRate after attempted change to invalid value");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         try {
             // set to invalid value
             instance.setDebtInterestRate(debt, 2.0);
@@ -216,7 +221,7 @@ public class AssistantModelTest {
     public void testGetDebtInterestRateChangedExternally() {
         System.out.println("getDebtInterestRate external change");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         debt.setInterestRate(0.7);
         double expResult = 0.7;
         double result = instance.getDebtInterestRate(debt);
@@ -230,7 +235,7 @@ public class AssistantModelTest {
     public void testSetDebtInterestRate() {
         System.out.println("setDebtInterestRate to 20%");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         double rate = 0.2;
         instance.setDebtInterestRate(debt, rate);
         assertEquals(rate, instance.getDebtInterestRate(debt), 0.0);
@@ -243,7 +248,7 @@ public class AssistantModelTest {
     public void testSetDebtInterestRateZero() {
         System.out.println("setDebtInterestRate to 0%");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         double rate = 0;
         instance.setDebtInterestRate(debt, rate);
         assertEquals(rate, instance.getDebtInterestRate(debt), 0.0);
@@ -256,7 +261,7 @@ public class AssistantModelTest {
     public void testSetDebtInterestRateTo100() {
         System.out.println("setDebtInterestRate to 100%");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         double rate = 1.0;
         instance.setDebtInterestRate(debt, rate);
     }
@@ -268,7 +273,7 @@ public class AssistantModelTest {
     public void testSetDebtInterestRateTooHigh() {
         System.out.println("setDebtInterestRate to 200%");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         double rate = 2.0;
         instance.setDebtInterestRate(debt, rate);
     }
@@ -280,7 +285,7 @@ public class AssistantModelTest {
     public void testSetDebtInterestRateNegative() {
         System.out.println("setDebtInterestRate to -50%");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         double rate = -0.5;
         instance.setDebtInterestRate(debt, rate);
     }
@@ -292,7 +297,7 @@ public class AssistantModelTest {
     public void testGetDebtOutstandingBalance() {
         System.out.println("getDebtOutstandingBalance");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int expResult = 100;
         int result = instance.getDebtOutstandingBalance(debt);
         assertEquals(expResult, result);
@@ -305,7 +310,7 @@ public class AssistantModelTest {
     public void testGetDebtOutstandingBalanceAfterInvalidChange() {
         System.out.println("getDebtOutstandingBalance after attempted change to invalid value");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         try {
             instance.setDebtOutstandingBalance(debt, -100);
         } catch (IllegalArgumentException ex) {
@@ -324,7 +329,7 @@ public class AssistantModelTest {
     public void testGetDebtOutstandingBalanceChangedExternally() {
         System.out.println("getDebtOutstandingBalance external change");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         debt.setOutstandingBalance(500);
         int expResult = 500;
         int result = instance.getDebtOutstandingBalance(debt);
@@ -338,7 +343,7 @@ public class AssistantModelTest {
     public void testSetDebtOutstandingBalance() {
         System.out.println("setDebtOutstandingBalance to 200");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int outstanding = 200;
         instance.setDebtOutstandingBalance(debt, outstanding);
         assertEquals(outstanding, instance.getDebtOutstandingBalance(debt));
@@ -351,7 +356,7 @@ public class AssistantModelTest {
     public void testSetDebtOutstandingBalanceZero() {
         System.out.println("setDebtOutstandingBalance to 0");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int outstanding = 0;
         instance.setDebtOutstandingBalance(debt, outstanding);
         assertEquals(outstanding, instance.getDebtOutstandingBalance(debt));
@@ -364,7 +369,7 @@ public class AssistantModelTest {
     public void testSetDebtOutstandingBalanceNegative() {
         System.out.println("setDebtOutstandingBalance to -100");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int outstanding = -100;
         instance.setDebtOutstandingBalance(debt, outstanding);
     }
@@ -376,7 +381,7 @@ public class AssistantModelTest {
     public void testGetDebtMinimumPayment() {
         System.out.println("getDebtMinimumPayment");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int expResult = 10;
         int result = instance.getDebtMinimumPayment(debt);
         assertEquals(expResult, result);
@@ -389,7 +394,7 @@ public class AssistantModelTest {
     public void testGetDebtMinimumPaymentAfterInvalidChange() {
         System.out.println("getDebtMinimumPayment after attempted change to invalid value");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         try {
             instance.setDebtMinimumPayment(debt, -100);
         } catch (IllegalArgumentException ex) {
@@ -408,7 +413,7 @@ public class AssistantModelTest {
     public void testGetDebtMinimumPaymentChangedExternally() {
         System.out.println("getDebtMinimumPayment external change");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         debt.setMinimumPayment(60);
         int expResult = 60;
         int result = instance.getDebtMinimumPayment(debt);
@@ -422,7 +427,7 @@ public class AssistantModelTest {
     public void testSetDebtMinimumPayment() {
         System.out.println("setDebtMinimumPayment to 50");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int amount = 50;
         instance.setDebtMinimumPayment(debt, amount);
         assertEquals(amount, instance.getDebtMinimumPayment(debt));
@@ -435,7 +440,7 @@ public class AssistantModelTest {
     public void testSetDebtMinimumPaymentZero() {
         System.out.println("setDebtMinimumPayment to 0");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int amount = 0;
         instance.setDebtMinimumPayment(debt, amount);
         assertEquals(amount, instance.getDebtMinimumPayment(debt));
@@ -448,7 +453,7 @@ public class AssistantModelTest {
     public void testSetDebtMinimumPaymentBeyondOutstandingBalance() {
         System.out.println("setDebtMinimumPayment to 250");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int amount = 250;
         instance.setDebtMinimumPayment(debt, amount);
         assertEquals(instance.getDebtOutstandingBalance(debt), instance.getDebtMinimumPayment(debt));
@@ -461,7 +466,7 @@ public class AssistantModelTest {
     public void testSetDebtMinimumPaymentEqualOutstandingBalance() {
         System.out.println("setDebtMinimumPayment to 100");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int amount = 100;
         instance.setDebtMinimumPayment(debt, amount);
         assertEquals(instance.getDebtOutstandingBalance(debt), instance.getDebtMinimumPayment(debt));
@@ -474,7 +479,7 @@ public class AssistantModelTest {
     public void testSetDebtMinimumPaymentNegative() {
         System.out.println("setDebtMinimumPayment to -100");
         AssistantModel instance = new AssistantModel();
-        Debt debt = instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        Debt debt = instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int amount = -100;
         instance.setDebtMinimumPayment(debt, amount);
     }
@@ -498,7 +503,7 @@ public class AssistantModelTest {
     public void testGetMinimumPaymentSum1Debt() {
         System.out.println("getMinimumPaymentSum 1 debt");
         AssistantModel instance = new AssistantModel();
-        instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int expResult = 10;
         int result = instance.getMinimumPaymentSum();
         assertEquals(expResult, result);
@@ -511,8 +516,8 @@ public class AssistantModelTest {
     public void testGetMinimumPaymentSum2Debts() {
         System.out.println("getMinimumPaymentSum 2 debt");
         AssistantModel instance = new AssistantModel();
-        instance.addDebt("Test Debt 1", 100, 0.1, 10);
-        instance.addDebt("Test Debt 2", 4000, 0.14, 80);
+        instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
+        instance.addDebt(DEBT_NAME_2, 4000, 0.14, 80);
         int expResult = 10 + 80;
         int result = instance.getMinimumPaymentSum();
         assertEquals(expResult, result);
@@ -525,10 +530,10 @@ public class AssistantModelTest {
     public void testGetMinimumPaymentSum1DebtPlus1InvalidAdd() {
         System.out.println("getMinimumPaymentSum 1 debt");
         AssistantModel instance = new AssistantModel();
-        instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         try {
             // add debt with invalid values
-            instance.addDebt("Test Debt 2", -200, 0.15, 15);
+            instance.addDebt(DEBT_NAME_2, -200, 0.15, 15);
         } catch (IllegalArgumentException ex) {
             // dp nothing
         }
@@ -584,17 +589,17 @@ public class AssistantModelTest {
         Map<Debt, Integer> expResult = new HashMap<>();
 
         instance.setBudgetAmount(30);
-        expResult.put(instance.addDebt("Test Debt 1", 1000, 0.12, 10), 6);  // less than minimum
-        expResult.put(instance.addDebt("Test Debt 2", 2000, 0.10, 20), 0);  // nothing
-        expResult.put(instance.addDebt("Test Debt 3", 400, 0.21, 4), 4);    // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 4", 600, 0.08, 6), 0);    // nothing
-        expResult.put(instance.addDebt("Test Debt 5", 2000, 0.16, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 6);  // less than minimum
+        expResult.put(instance.addDebt(DEBT_NAME_1, 2000, 0.10, 20), 0);  // nothing
+        expResult.put(instance.addDebt(DEBT_NAME_2, 400, 0.21, 4), 4);    // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_3, 600, 0.08, 6), 0);    // nothing
+        expResult.put(instance.addDebt(DEBT_NAME_4, 2000, 0.16, 20), 20); // full minimum payment
 
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
-        for (Map.Entry<Debt, Integer> suggestion : result.entrySet()) {
+        result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
             assertEquals(suggestion.getValue(), expResult.get(d));
-        }
+        });
     }
 
     /**
@@ -607,17 +612,17 @@ public class AssistantModelTest {
         Map<Debt, Integer> expResult = new HashMap<>();
 
         instance.setBudgetAmount(60);
-        expResult.put(instance.addDebt("Test Debt 1", 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 2", 2000, 0.10, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 3", 400, 0.21, 4), 4);    // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 4", 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 5", 2000, 0.16, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_3, 400, 0.21, 4), 4);    // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 20); // full minimum payment
 
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
-        for (Map.Entry<Debt, Integer> suggestion : result.entrySet()) {
+        result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
             assertEquals(suggestion.getValue(), expResult.get(d));
-        }
+        });
     }
 
     /**
@@ -630,17 +635,17 @@ public class AssistantModelTest {
         Map<Debt, Integer> expResult = new HashMap<>();
 
         instance.setBudgetAmount(600);
-        expResult.put(instance.addDebt("Test Debt 1", 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 2", 2000, 0.10, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 3", 400, 0.21, 4), 400);  // full outstanding balance
-        expResult.put(instance.addDebt("Test Debt 4", 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 5", 2000, 0.16, 20), 164);// full minimum payment + 144 of remaing budget
+        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_3, 400, 0.21, 4), 400);  // full outstanding balance
+        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 164);// full minimum payment + 144 of remaing budget
 
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
-        for (Map.Entry<Debt, Integer> suggestion : result.entrySet()) {
+        result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
             assertEquals(suggestion.getValue(), expResult.get(d));
-        }
+        });
     }
 
     /**
@@ -653,16 +658,16 @@ public class AssistantModelTest {
         Map<Debt, Integer> expResult = new HashMap<>();
 
         instance.setBudgetAmount(30);
-        expResult.put(instance.addDebt("Test Debt 1", 1000, 0.12, 10), 10);  // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 2", 2000, 0.10, 20), 0);  // nothing
-        expResult.put(instance.addDebt("Test Debt 4", 600, 0.08, 6), 0);    // nothing
-        expResult.put(instance.addDebt("Test Debt 5", 2000, 0.16, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10);  // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 0);  // nothing
+        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 0);    // nothing
+        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 20); // full minimum payment
 
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
-        for (Map.Entry<Debt, Integer> suggestion : result.entrySet()) {
+        result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
             assertEquals(suggestion.getValue(), expResult.get(d));
-        }
+        });
     }
 
     /**
@@ -675,10 +680,10 @@ public class AssistantModelTest {
         Map<Debt, Integer> expResult = new HashMap<>();
 
         instance.setBudgetAmount(60);
-        expResult.put(instance.addDebt("Test Debt 1", 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 2", 2000, 0.10, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 4", 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 5", 2000, 0.16, 20), 24); // beyond full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 24); // beyond full minimum payment
 
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
         assertEquals(expResult, result);
@@ -694,10 +699,10 @@ public class AssistantModelTest {
         Map<Debt, Integer> expResult = new HashMap<>();
 
         instance.setBudgetAmount(600);
-        expResult.put(instance.addDebt("Test Debt 1", 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 2", 2000, 0.10, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 4", 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt("Test Debt 5", 2000, 0.16, 20), 564); // beyond full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.10, 20), 20); // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
+        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 564); // beyond full minimum payment
 
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
         assertEquals(expResult, result);
@@ -722,7 +727,7 @@ public class AssistantModelTest {
     public void testGetDebtsCount1Debt() {
         System.out.println("getDebtsCount");
         AssistantModel instance = new AssistantModel();
-        instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         int expResult = 1;
         int result = instance.getDebtsCount();
         assertEquals(expResult, result);
@@ -735,13 +740,13 @@ public class AssistantModelTest {
     public void testGetDebtsCount7Debt() {
         System.out.println("getDebtsCount");
         AssistantModel instance = new AssistantModel();
-        instance.addDebt("Test Debt 1", 100, 0.12, 15);
-        instance.addDebt("Test Debt 2", 600, 0.15, 20);
-        instance.addDebt("Test Debt 3", 4000, 0.2, 12);
-        instance.addDebt("Test Debt 4", 1000, 0.08, 17);
-        instance.addDebt("Test Debt 5", 2000, 0.11, 400);
-        instance.addDebt("Test Debt 6", 2700, 0.04, 42);
-        instance.addDebt("Test Debt 7", 20, 0.09, 5);
+        instance.addDebt(DEBT_NAME_1, 100, 0.12, 15);
+        instance.addDebt(DEBT_NAME_2, 600, 0.15, 20);
+        instance.addDebt(DEBT_NAME_3, 4000, 0.2, 12);
+        instance.addDebt(DEBT_NAME_4, 1000, 0.08, 17);
+        instance.addDebt(DEBT_NAME_5, 2000, 0.11, 400);
+        instance.addDebt(DEBT_NAME_6, 2700, 0.04, 42);
+        instance.addDebt(DEBT_NAME_7, 20, 0.09, 5);
         int expResult = 7;
         int result = instance.getDebtsCount();
         assertEquals(expResult, result);
@@ -754,13 +759,13 @@ public class AssistantModelTest {
     public void testGetDebtsCount7DebtWith1Deletion() {
         System.out.println("getDebtsCount");
         AssistantModel instance = new AssistantModel();
-        instance.addDebt("Test Debt 1", 100, 0.12, 15);
-        instance.addDebt("Test Debt 2", 600, 0.15, 20);
-        instance.addDebt("Test Debt 3", 4000, 0.2, 12);
-        instance.addDebt("Test Debt 4", 1000, 0.08, 17);
-        Debt d = instance.addDebt("Test Debt 5", 2000, 0.11, 400);
-        instance.addDebt("Test Debt 6", 2700, 0.04, 42);
-        instance.addDebt("Test Debt 7", 20, 0.09, 5);
+        instance.addDebt(DEBT_NAME_1, 100, 0.12, 15);
+        instance.addDebt(DEBT_NAME_2, 600, 0.15, 20);
+        instance.addDebt(DEBT_NAME_3, 4000, 0.2, 12);
+        instance.addDebt(DEBT_NAME_4, 1000, 0.08, 17);
+        Debt d = instance.addDebt(DEBT_NAME_5, 2000, 0.11, 400);
+        instance.addDebt(DEBT_NAME_6, 2700, 0.04, 42);
+        instance.addDebt(DEBT_NAME_7, 20, 0.09, 5);
         instance.removeDebt(d);
         int expResult = 6;
         int result = instance.getDebtsCount();
@@ -774,10 +779,10 @@ public class AssistantModelTest {
     public void testGetDebtsCount1DebtPlus1InvalidAdd() {
         System.out.println("getDebtsCount after attempted add invalid debt");
         AssistantModel instance = new AssistantModel();
-        instance.addDebt("Test Debt 1", 100, 0.1, 10);
+        instance.addDebt(DEBT_NAME_1, 100, 0.1, 10);
         try {
             // add debt with invalid values
-            instance.addDebt("Test Debt 2", -200, 0.15, 15);
+            instance.addDebt(DEBT_NAME_2, -200, 0.15, 15);
         } catch (IllegalArgumentException ex) {
             // dp nothing
         }
