@@ -3,10 +3,10 @@ package com.kacperstasiak.repaymentassistant;
 import com.kacperstasiak.repaymentassistant.MVC.View;
 import com.kacperstasiak.repaymentassistant.MVC.Model;
 import com.kacperstasiak.repaymentassistant.MVC.Controller;
-import java.io.File;
 
 /**
- * The main class, initialises view, model and controller.
+ * The main class, initialises view, model and controller. Handles saving and
+ * loading the model
  *
  * @author Kacper Stasiak
  */
@@ -18,20 +18,7 @@ public class Main {
         // in this function, so that the model is saved.
         //com.apple.eawt.Application.getApplication().setQuitStrategy(com.apple.eawt.QuitStrategy.CLOSE_ALL_WINDOWS);
 
-        Model model;
-
-        // Check if ./debts.ser exists
-        File file = new File("./debts.ser"); //NOI18N
-        if (file.exists()) {
-            // Load from file
-            model = AssistantModel.load("./debts.ser"); //NOI18N
-        } else {
-            // Create a new model with sample data
-            model = new AssistantModel();
-            model.addDebt("Test Debt 1", 100000, 0.124, 50);
-            model.addDebt("Test Debt 2", 300000, 0.170, 150);
-            model.addDebt("Test Debt 3", 200000, 0.150, 3000);
-        }
+        Model model = AssistantModel.load("./debts.ser"); //NOI18N
 
         View view = new AssistantSwingView();
         Controller controller = new AssistantController(model, view);

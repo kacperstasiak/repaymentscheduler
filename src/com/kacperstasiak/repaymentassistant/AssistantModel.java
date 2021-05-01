@@ -115,7 +115,7 @@ public class AssistantModel implements Model, java.io.Serializable {
      * Sets the outstanding balance for the debt
      *
      * @param debt The debt instance
-     * @param outstanding The oustanding amount (in pence)
+     * @param outstanding The outstanding amount (in pence)
      */
     @Override
     public void setDebtOutstandingBalance(Debt debt, int outstanding) {
@@ -175,6 +175,9 @@ public class AssistantModel implements Model, java.io.Serializable {
      */
     @Override
     public void setBudgetAmount(int budget) {
+        if (budget < 0) {
+            budget = 0;
+        }
         this.budget = budget;
     }
 
@@ -266,71 +269,67 @@ public class AssistantModel implements Model, java.io.Serializable {
      * failed
      */
     public static AssistantModel load(String filepath) {
-        try (
-                FileInputStream filein = new FileInputStream(filepath);
+        try (   FileInputStream filein = new FileInputStream(filepath);
                 ObjectInputStream in = new ObjectInputStream(filein)) {
             AssistantModel model = (AssistantModel) in.readObject();
             System.out.println(
-                    java.text.MessageFormat.format(
-                            java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
-                                    .getString("LOADED MODEL FROM {0}"),
-                            new Object[]{filepath}
-                    )
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
+                        .getString("LOADED MODEL FROM {0}"),
+                    new Object[]{filepath}
+                )
             );
             return model;
         } catch (ClassNotFoundException e) {
             System.out.println(
                     java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
-                            .getString("FAILED TO LOAD MODEL DUE TO CLASSNOTFOUNDEXCEPTION.")
+                            .getString("FAILED TO LOAD MODEL DUE TO CLASSNOTFOUNDEXCEPTION")
             );
         } catch (IOException e) {
             System.out.println(
-                    java.text.MessageFormat.format(
-                            java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
-                                    .getString("CAUGHT IOEXCEPTION WHEN LOADING MODEL AT {0}"),
-                            new Object[]{filepath}
-                    )
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
+                        .getString("CAUGHT IOEXCEPTION WHEN LOADING MODEL AT {0}"),
+                    new Object[]{filepath}
+                )
             );
         }
         return new AssistantModel();
     }
 
-    ;
-    
     /**
      * Saves a model into a serialised file
+     *
      * @param model The model to save
      * @param filepath The path where the serialised file is or should be
      */
     public static void save(AssistantModel model, String filepath) {
-        try (
-                FileOutputStream fileout = new FileOutputStream(filepath);
+        try (   FileOutputStream fileout = new FileOutputStream(filepath);
                 ObjectOutputStream out = new ObjectOutputStream(fileout)) {
             out.writeObject(model);
             System.out.println(
-                    java.text.MessageFormat.format(
-                            java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
-                                    .getString("SAVED MODEL AT {0}"),
-                            new Object[]{filepath}
-                    )
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
+                        .getString("SAVED MODEL AT {0}"),
+                    new Object[]{filepath}
+                )
             );
         } catch (FileNotFoundException e) {
             System.out.println(
-                    java.text.MessageFormat.format(
-                            java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
-                                    .getString("FAILED TO SAVE MODEL AT {0} DUE TO FILENOTFOUNDEXCEPTION"),
-                            new Object[]{filepath}
-                    )
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
+                        .getString("FAILED TO SAVE MODEL AT {0} DUE TO FILENOTFOUNDEXCEPTION"),
+                    new Object[]{filepath}
+                )
             );
         } catch (IOException e) {
             System.out.println(
-                    java.text.MessageFormat.format(
-                            java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
-                                    .getString("CAUGHT IOEXCEPTION WHEN SAVING MODEL AT {0}"),
-                            new Object[]{filepath}
-                    )
+                java.text.MessageFormat.format(
+                    java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings")
+                        .getString("CAUGHT IOEXCEPTION WHEN SAVING MODEL AT {0}"),
+                    new Object[]{filepath}
+                )
             );
         }
     }
-;
 }

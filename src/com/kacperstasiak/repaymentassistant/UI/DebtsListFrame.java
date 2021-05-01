@@ -213,7 +213,7 @@ public class DebtsListFrame extends javax.swing.JFrame {
         budgetAmountLabel.setText(bundle.getString("AVAILABLE REPAYMENT BUDGET")); // NOI18N
 
         budgetWarningLabel.setForeground(new java.awt.Color(200, 0, 0));
-        budgetWarningLabel.setText(bundle.getString("WARNING: NOT ENOUGH TO COVER ALL MINIMUM PAYMENTS")); // NOI18N
+        budgetWarningLabel.setText(bundle.getString("WARNING NOT ENOUGH TO COVER ALL MINIMUM PAYMENTS")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

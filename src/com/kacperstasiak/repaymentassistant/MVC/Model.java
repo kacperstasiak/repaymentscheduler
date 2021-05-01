@@ -75,7 +75,7 @@ public interface Model {
      * Sets the outstanding balance for the debt
      *
      * @param d The debt instance
-     * @param outstanding The oustanding amount (in pence)
+     * @param outstanding The outstanding amount (in pence)
      */
     public void setDebtOutstandingBalance(Debt d, int outstanding);
 

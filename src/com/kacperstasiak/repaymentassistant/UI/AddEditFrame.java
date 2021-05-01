@@ -28,6 +28,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         balInput.setValue(0.0);
         rateInput.setValue(0.0);
         payInput.setValue(0.0);
+        errorLabel.setVisible(false);
         this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("ADD DEBT"));
     }
 
@@ -47,6 +48,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         balInput.setValue(debt.getOutstandingBalance() / 100);
         rateInput.setValue(debt.getInterestRate() * 100);
         payInput.setValue(debt.getMinimumPayment() / 100);
+        errorLabel.setVisible(false);
         this.setTitle(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("EDIT DEBT"));
     }
 
@@ -73,6 +75,7 @@ public class AddEditFrame extends javax.swing.JFrame {
         payInput = new javax.swing.JFormattedTextField();
         cancelBtn = new javax.swing.JButton();
         okBtn = new javax.swing.JButton();
+        errorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
@@ -174,6 +177,10 @@ public class AddEditFrame extends javax.swing.JFrame {
             }
         });
 
+        errorLabel.setForeground(new java.awt.Color(200, 0, 0));
+        errorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorLabel.setText(bundle.getString("ADDEDIT ERROR")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -188,7 +195,8 @@ public class AddEditFrame extends javax.swing.JFrame {
                         .addComponent(okBtn))
                     .addComponent(balPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ratePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(payPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(payPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,16 +211,20 @@ public class AddEditFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(payPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(okBtn)
                     .addComponent(cancelBtn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+        errorLabel.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("ADDEDIT ERROR"));
+        errorLabel.setVisible(false);
         String ref = ((String) refInput.getValue());
         double bal = ((Number) balInput.getValue()).doubleValue();
         double rate = ((Number) rateInput.getValue()).doubleValue();
@@ -220,20 +232,27 @@ public class AddEditFrame extends javax.swing.JFrame {
         int balance = (int) Math.floor(bal * 100);
         int minpay = (int) Math.floor(pay * 100);
         if (ref.length() < 1) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID REFERENCE!"));
+            errorLabel.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID REFERENCE"));
+            errorLabel.setVisible(true);
             return;
         }
         if (balance < 0) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID BALANCE!"));
+            errorLabel.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID BALANCE"));
+            errorLabel.setVisible(true);
             return;
         }
-        if (rate < 0.0 || rate > 100.0) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID INTEREST RATE!"));
+        if (rate < 0.0 || rate >= 100.0) {
+            errorLabel.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID INTEREST RATE"));
+            errorLabel.setVisible(true);
+            return;
         }
         if (minpay < 0) {
-            System.out.println(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID MIN PAYMENT!"));
+            errorLabel.setText(java.util.ResourceBundle.getBundle("com/kacperstasiak/repaymentassistant/strings").getString("INVALID MIN PAYMENT"));
+            errorLabel.setVisible(true);
             return;
         }
+        
+        
         if (editing != null) {
             controller.editDebt(editing, ref, balance, rate / 100, minpay);
         } else {
@@ -258,6 +277,7 @@ public class AddEditFrame extends javax.swing.JFrame {
     private javax.swing.JLabel balLabel;
     private javax.swing.JPanel balPanel;
     private javax.swing.JButton cancelBtn;
+    private javax.swing.JLabel errorLabel;
     private javax.swing.JButton okBtn;
     private javax.swing.JFormattedTextField payInput;
     private javax.swing.JLabel payLabel;

@@ -74,14 +74,14 @@ public class AssistantController implements Controller {
      * Adds a new debt item instance into the model
      *
      * @param ref User defined reference or description
-     * @param oustanding Outstanding balance in pence
+     * @param outstanding Outstanding balance in pence
      * @param interest Annual interest rate
      * @param minpay Next minimum payment
      */
     @Override
-    public void addDebt(String ref, int oustanding, double interest,
+    public void addDebt(String ref, int outstanding, double interest,
             int minpay) {
-        model.addDebt(ref, oustanding, interest, minpay);
+        model.addDebt(ref, outstanding, interest, minpay);
     }
 
     /**
