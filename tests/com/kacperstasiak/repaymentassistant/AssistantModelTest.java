@@ -583,22 +583,24 @@ public class AssistantModelTest {
      * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
      */
     @Test
-    public void testGetDebtRepaymentSuggestions1SmallBudget() {
-        System.out.println("getDebtRepaymentSuggestions 30 budget normal debt");
+    public void testGetDebtRepaymentSuggestionsNegativeBudget() {
+        System.out.println("getDebtRepaymentSuggestions negative budget");
         AssistantModel instance = new AssistantModel();
         Map<Debt, Integer> expResult = new HashMap<>();
 
-        instance.setBudgetAmount(30);
-        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 6);  // less than minimum
-        expResult.put(instance.addDebt(DEBT_NAME_1, 2000, 0.08, 20), 0);  // nothing
-        expResult.put(instance.addDebt(DEBT_NAME_2, 400, 0.21, 4), 4);    // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_3, 600, 0.08, 6), 0);    // nothing
-        expResult.put(instance.addDebt(DEBT_NAME_4, 2000, 0.16, 20), 20); // full minimum payment
+        instance.setBudgetAmount(-500_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 0); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 0); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 0); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 0); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 0); // same rates
 
+        
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
         result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
-            assertEquals(suggestion.getValue(), expResult.get(d));
+            assertEquals(expResult.get(d), suggestion.getValue());
         });
     }
 
@@ -606,22 +608,24 @@ public class AssistantModelTest {
      * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
      */
     @Test
-    public void testGetDebtRepaymentSuggestions1PerfectBudget() {
-        System.out.println("getDebtRepaymentSuggestions 60 budget normal debt");
+    public void testGetDebtRepaymentSuggestionsZeroBudget() {
+        System.out.println("getDebtRepaymentSuggestions zero budget");
         AssistantModel instance = new AssistantModel();
         Map<Debt, Integer> expResult = new HashMap<>();
 
-        instance.setBudgetAmount(60);
-        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_3, 400, 0.21, 4), 4);    // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 20); // full minimum payment
+        instance.setBudgetAmount(0_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 0); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 0); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 0); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 0); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 0); // same rates
 
+        
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
         result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
-            assertEquals(suggestion.getValue(), expResult.get(d));
+            assertEquals(expResult.get(d), suggestion.getValue());
         });
     }
 
@@ -629,22 +633,24 @@ public class AssistantModelTest {
      * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
      */
     @Test
-    public void testGetDebtRepaymentSuggestions1BigBudget() {
-        System.out.println("getDebtRepaymentSuggestions 600 budget normal debt");
+    public void testGetDebtRepaymentSuggestionsInsufficient1MinPayBudget() {
+        System.out.println("getDebtRepaymentSuggestions budget insufficient for one minimum payment");
         AssistantModel instance = new AssistantModel();
         Map<Debt, Integer> expResult = new HashMap<>();
 
-        instance.setBudgetAmount(600);
-        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_3, 400, 0.21, 4), 400);  // full outstanding balance
-        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 164);// full minimum payment + 144 of remaing budget
+        instance.setBudgetAmount(59_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 0); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 0); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 59_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 0); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 0); // same rates
 
+        
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
         result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
-            assertEquals(suggestion.getValue(), expResult.get(d));
+            assertEquals(expResult.get(d), suggestion.getValue());
         });
     }
 
@@ -652,21 +658,24 @@ public class AssistantModelTest {
      * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
      */
     @Test
-    public void testGetDebtRepaymentSuggestions2SmallBudget() {
-        System.out.println("getDebtRepaymentSuggestions 30 budget less debt");
+    public void testGetDebtRepaymentSuggestionsSufficient1MinPayBudget() {
+        System.out.println("getDebtRepaymentSuggestions budget sufficient for one minimum payment");
         AssistantModel instance = new AssistantModel();
         Map<Debt, Integer> expResult = new HashMap<>();
 
-        instance.setBudgetAmount(30);
-        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10);  // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 0);  // nothing
-        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 0);    // nothing
-        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 20); // full minimum payment
+        instance.setBudgetAmount(60_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 0); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 0); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 60_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 0); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 0); // same rates
 
+        
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
         result.entrySet().forEach((suggestion) -> {
             Debt d = suggestion.getKey();
-            assertEquals(suggestion.getValue(), expResult.get(d));
+            assertEquals(expResult.get(d), suggestion.getValue());
         });
     }
 
@@ -674,38 +683,250 @@ public class AssistantModelTest {
      * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
      */
     @Test
-    public void testGetDebtRepaymentSuggestions2AtSameBudget() {
-        System.out.println("getDebtRepaymentSuggestions 60 budget less debt");
+    public void testGetDebtRepaymentSuggestionsSufficient1MinPayBudget2() {
+        System.out.println("getDebtRepaymentSuggestions budget more than for one minimum payment");
         AssistantModel instance = new AssistantModel();
         Map<Debt, Integer> expResult = new HashMap<>();
 
-        instance.setBudgetAmount(60);
-        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 24); // beyond full minimum payment
+        instance.setBudgetAmount(61_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 0); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 1_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 60_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 0); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 0); // same rates
 
+        
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
-        assertEquals(expResult, result);
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
     }
 
     /**
      * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
      */
     @Test
-    public void testGetDebtRepaymentSuggestions2AtBigBudget() {
-        System.out.println("getDebtRepaymentSuggestions 600 budget less debt");
+    public void testGetDebtRepaymentSuggestionsInsufficientMinPays() {
+        System.out.println("getDebtRepaymentSuggestions budget insufficient for all minimum payments");
         AssistantModel instance = new AssistantModel();
         Map<Debt, Integer> expResult = new HashMap<>();
 
-        instance.setBudgetAmount(600);
-        expResult.put(instance.addDebt(DEBT_NAME_1, 1000, 0.12, 10), 10); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_2, 2000, 0.08, 20), 20); // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_4, 600, 0.08, 6), 6);    // full minimum payment
-        expResult.put(instance.addDebt(DEBT_NAME_5, 2000, 0.16, 20), 564); // beyond full minimum payment
+        instance.setBudgetAmount(234_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 50_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 40_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 60_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 70_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 14_00); // same rates
 
+        
         Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
-        assertEquals(expResult, result);
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsSufficientMinPays() {
+        System.out.println("getDebtRepaymentSuggestions budget sufficient for all minimum payments");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(235_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 50_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 40_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 60_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 70_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 15_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsSufficientMinPays2() {
+        System.out.println("getDebtRepaymentSuggestions budget more than for all minimum payments");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(236_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 50_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 40_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 61_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 70_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 15_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsInsufficientBal() {
+        System.out.println("getDebtRepaymentSuggestions budget insufficient for one outstanding balance");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(774_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 50_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 40_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 599_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 70_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 15_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsSufficientBal() {
+        System.out.println("getDebtRepaymentSuggestions budget sufficient for one outstanding balance");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(775_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00),  50_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00),  40_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 600_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00),  70_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00),  15_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsSufficientBal2() {
+        System.out.println("getDebtRepaymentSuggestions budget more than for one outstanding balance");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(776_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00),  50_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00),  41_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 600_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00),  70_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00),  15_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsInsufficientTotalBal() {
+        System.out.println("getDebtRepaymentSuggestions budget insufficient for all outstanding balances");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(2349_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 500_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 400_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 600_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 700_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 149_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsSufficientTotalBal() {
+        System.out.println("getDebtRepaymentSuggestions budget sufficient for all outstanding balances");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(2350_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 500_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 400_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 600_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 700_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 150_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
+    }
+
+    /**
+     * Test of getDebtRepaymentSuggestions method, of class AssistantModel.
+     */
+    @Test
+    public void testGetDebtRepaymentSuggestionsSufficientTotalBal2() {
+        System.out.println("getDebtRepaymentSuggestions budget more than for all outstanding balances");
+        AssistantModel instance = new AssistantModel();
+        Map<Debt, Integer> expResult = new HashMap<>();
+
+        instance.setBudgetAmount(2351_00);
+        
+        expResult.put(instance.addDebt(DEBT_NAME_1, 500_00, 0.105, 50_00), 500_00); // third highest
+        expResult.put(instance.addDebt(DEBT_NAME_1, 400_00, 0.110, 40_00), 400_00); // second highest
+        expResult.put(instance.addDebt(DEBT_NAME_2, 600_00, 0.125, 60_00), 600_00); // highest rate
+        expResult.put(instance.addDebt(DEBT_NAME_3, 700_00, 0.090, 70_00), 700_00); // same rates
+        expResult.put(instance.addDebt(DEBT_NAME_4, 150_00, 0.090, 15_00), 150_00); // same rates
+
+        
+        Map<Debt, Integer> result = instance.getDebtRepaymentSuggestions();
+        result.entrySet().forEach((suggestion) -> {
+            Debt d = suggestion.getKey();
+            assertEquals(expResult.get(d), suggestion.getValue());
+        });
     }
 
     /**
