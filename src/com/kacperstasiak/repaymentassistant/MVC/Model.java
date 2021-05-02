@@ -124,7 +124,7 @@ public interface Model {
     /**
      * Returns the repayment budget amount
      *
-     * @return Budget in pounds
+     * @return Budget in pence
      */
     public int getBudgetAmount();
 
